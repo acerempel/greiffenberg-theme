@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+/*
+Theme Name: Greiffenberg
+Theme URI: https://github.com/acerempel/greiffenberg
+Author: Alan Rempel
+Author URI: http://threedots.ca
+Template: twentytwentyone
+Version: 0.1.7
+Description: Theme for CRVG sonnet translations, based on Twenty Twenty One
+*/
+
+:root {
+  --global--font-size-xxl: 3rem;
+  --global--font-size-xxxl: 3.75rem;
+  --global--spacing-vertical: 1rem;
+}
+
+p, .wp-block-verse {
+	line-height: var(--wp--typography--line-height, var(--global--line-height-body));
+}
