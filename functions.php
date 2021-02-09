@@ -19,7 +19,8 @@ $greiffenberg_defaults = array(
   'body-line-height' => '1.6',
   'heading-line-height' => '1.4',
   'vertical-spacing' => '1',
-  'horizontal-spacing' => '0.8'
+  'horizontal-spacing' => '0.8',
+  'site-title-case' => 'uppercase'
 );
 
 function greiffenberg_customize($customizer) {
@@ -50,6 +51,19 @@ function greiffenberg_customize($customizer) {
     'label' => 'Line height of headings',
     'type' => 'number',
     'input_attrs' => array('min' => '0.5', 'max' => '3.0', 'step' => '0.1'),
+    'section' => 'typography'
+  ));
+
+  $customizer->add_setting('site-title-case', array(
+    'capability' => 'edit_theme_options',
+    'default' => $greiffenberg_defaults['site-title-case'],
+    'transport' => 'postMessage',
+    'sanitize_callback' => function ($bool) { return $bool ? 'uppercase' : 'none'; }
+  ));
+
+  $customizer->add_control('site-title-case', array(
+    'label' => 'Display site title in all caps',
+    'type' => 'checkbox',
     'section' => 'typography'
   ));
 
@@ -110,6 +124,7 @@ function greiffenberg_custom_css() {
   echo '--global--line-height-heading:' . greiffenberg_get_mod('heading-line-height') . ';'; 
   echo '--global--spacing-vertical:' . greiffenberg_get_mod('vertical-spacing') . 'rem;';
   echo '--global--spacing-horizontal:' . greiffenberg_get_mod('horizontal-spacing') . 'rem;';
+  echo '--branding--title--text-transform:' . greiffenberg_get_mod('site-title-case') . ';';
   echo '}</style>';
 }
 
