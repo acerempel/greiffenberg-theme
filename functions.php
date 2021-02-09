@@ -32,14 +32,37 @@ function greiffenberg_customize($customizer) {
   $customizer->add_section('typography', array(
     'title' => 'Typography',
     'description' => 'Ajust how text is displayed – line height, font family, etc.',
+    'priority' => 45
+  ));
+
+  $customizer->add_setting('vertical-spacing', array(
+    'capability' => 'edit_theme_options',
+    'default' => '1',
+    'sanitize_callback' => function ($number) { return (float) $number; }
+  ));
+
+  $customizer->add_control('vertical-spacing', array(
+    'label' => 'Vertical spacing',
+    'description' => 'This controls the amount of vertical space between various elements of the page, including paragraphs.',
+    'type' => 'number',
+    'section' => 'spacing'
+  ));
+
+  $customizer->add_section('spacing', array(
+    'title' => 'Spacing',
+    'description' => 'Ajust the spacing between various visual elements of the page',
     'priority' => 50
   ));
+
 }
 
 add_action('customize_register', 'greiffenberg_customize');
 
-function greiffenberg_line_height_css() {
-  echo '<style>body {--global--line-height-body:' . get_theme_mod('body-line-height', '1.5') . 'rem;}</style>'; 
+function greiffenberg_custom_css() {
+  echo '<style> body {';
+  echo '--global--line-height-body:' . get_theme_mod('body-line-height', '1.5') . 'rem;'; 
+  echo '--global--spacing-vertical:' . get_theme_mod('vertical-spacing', '1') . 'rem;';
+  echo '}</style>';
 }
 
-add_action('wp_head', 'greiffenberg_line_height_css');
+add_action('wp_head', 'greiffenberg_custom_css');

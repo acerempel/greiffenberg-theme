@@ -13,7 +13,6 @@ Description: Theme for CRVG sonnet translations, based on Twenty Twenty One
 :root {
   --global--font-size-xxl: 3rem;
   --global--font-size-xxxl: 3.75rem;
-  --global--spacing-vertical: 1rem;
 }
 
 p, .wp-block-verse {
