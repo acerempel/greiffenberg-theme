@@ -19,6 +19,12 @@ Description: Theme for CRVG sonnet translations, based on Twenty Twenty One
   --heading--font-size-h3: calc(1.25 * var(--global--font-size-lg));
 }
 
+/* Fixes a bug in twentytwentyone style.css */
 p, .wp-block-verse {
 	line-height: var(--wp--typography--line-height, var(--global--line-height-body));
+}
+
+.entry-title a {
+  text-decoration-thickness: 0.05em;
+  text-underline-offset: 0.25em;
 }
