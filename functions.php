@@ -5,7 +5,6 @@ function greiffenberg_styles() {
     // Handle that identifies this resource.
     'greiffenberg-main-stylesheet',
     // Path to the stylesheet.
-    /* get_template_directory_uri() . '/style.css', */
     get_stylesheet_uri(),
     // Ensure the parent theme stylesheet is loaded. See twentytwentyone/functions.php.
     array('twenty-twenty-one-style'),
@@ -20,6 +19,7 @@ function greiffenberg_customize($customizer) {
   $customizer->add_setting('body-line-height', array(
     'capability' => 'edit_theme_options', // what is this?
     'default' => '1.5',
+    'transport' => 'postMessage',
     'sanitize_callback' => function ($number) { return (float) $number; }
   ));
 
@@ -39,6 +39,7 @@ function greiffenberg_customize($customizer) {
   $customizer->add_setting('vertical-spacing', array(
     'capability' => 'edit_theme_options',
     'default' => '1',
+    'transport' => 'postMessage',
     'sanitize_callback' => function ($number) { return (float) $number; }
   ));
 
@@ -68,3 +69,14 @@ function greiffenberg_custom_css() {
 }
 
 add_action('wp_head', 'greiffenberg_custom_css');
+
+function greiffenberg_customize_preview_script() {
+  wp_enqueue_script(
+    'greiffenberg-customize-preview-script',
+    get_stylesheet_directory_uri() . '/customize_preview.js',
+    array('customize-preview'),
+    wp_get_theme()->get('Version')
+  );
+}
+
+add_action('customize_preview_init', 'greiffenberg_customize_preview_script');
