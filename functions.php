@@ -15,10 +15,18 @@ function greiffenberg_styles() {
 
 add_action('wp_enqueue_scripts', 'greiffenberg_styles');
 
+$greiffenberg_defaults = array(
+  'body-line-height' => '1.7',
+  'vertical-spacing' => '1',
+  'horizontal-spacing' => '0.8'
+);
+
 function greiffenberg_customize($customizer) {
+  global $greiffenberg_defaults;
+
   $customizer->add_setting('body-line-height', array(
     'capability' => 'edit_theme_options', // what is this?
-    'default' => '1.7',
+    'default' => $greiffenberg_defaults['body-line-height'],
     'transport' => 'postMessage',
     'sanitize_callback' => function ($number) { return (float) $number; }
   ));
@@ -38,7 +46,7 @@ function greiffenberg_customize($customizer) {
 
   $customizer->add_setting('vertical-spacing', array(
     'capability' => 'edit_theme_options',
-    'default' => '1',
+    'default' => $greiffenberg_defaults['vertical-spacing'],
     'transport' => 'postMessage',
     'sanitize_callback' => function ($number) { return (float) $number; }
   ));
@@ -53,7 +61,7 @@ function greiffenberg_customize($customizer) {
 
   $customizer->add_setting('horizontal-spacing', array(
     'capability' => 'edit_theme_options',
-    'default' => '0.8',
+    'default' => $greiffenberg_defaults['horizontal-spacing'],
     'transport' => 'postMessage',
     'sanitize_callback' => function ($number) { return (float) $number; }
   ));
@@ -76,11 +84,16 @@ function greiffenberg_customize($customizer) {
 
 add_action('customize_register', 'greiffenberg_customize');
 
+function greiffenberg_get_mod($id) {
+  global $greiffenberg_defaults;
+  return get_theme_mod($id, $greiffenberg_defaults[$id]);
+}
+
 function greiffenberg_custom_css() {
   echo '<style> body {';
-  echo '--global--line-height-body:' . get_theme_mod('body-line-height', '1.7') . ';'; 
-  echo '--global--spacing-vertical:' . get_theme_mod('vertical-spacing', '1') . 'rem;';
-  echo '--global--spacing-horizontal:' . get_theme_mod('horizontal-spacing', '0.8') . 'rem;';
+  echo '--global--line-height-body:' . greiffenberg_get_mod('body-line-height') . ';'; 
+  echo '--global--spacing-vertical:' . greiffenberg_get_mod('vertical-spacing') . 'rem;';
+  echo '--global--spacing-horizontal:' . greiffenberg_get_mod('horizontal-spacing') . 'rem;';
   echo '}</style>';
 }
 
