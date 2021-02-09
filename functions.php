@@ -51,6 +51,21 @@ function greiffenberg_customize($customizer) {
     'section' => 'spacing'
   ));
 
+  $customizer->add_setting('horizontal-spacing', array(
+    'capability' => 'edit_theme_options',
+    'default' => '0.8',
+    'transport' => 'postMessage',
+    'sanitize_callback' => function ($number) { return (float) $number; }
+  ));
+
+  $customizer->add_control('horizontal-spacing', array(
+    'label' => 'Horizontal spacing',
+    'description' => 'This controls the amount of horizontal space around various parts of the page.',
+    'type' => 'number',
+    'input_attrs' => array('min' => '0.5', 'max' => '3.0', 'step' => '0.1'),
+    'section' => 'spacing'
+  ));
+
   $customizer->add_section('spacing', array(
     'title' => 'Spacing',
     'description' => 'Ajust the spacing between various visual elements of the page',
@@ -65,6 +80,7 @@ function greiffenberg_custom_css() {
   echo '<style> body {';
   echo '--global--line-height-body:' . get_theme_mod('body-line-height', '1.5') . 'rem;'; 
   echo '--global--spacing-vertical:' . get_theme_mod('vertical-spacing', '1') . 'rem;';
+  echo '--global--spacing-horizontal:' . get_theme_mod('horizontal-spacing', '0.8') . 'rem;';
   echo '}</style>';
 }
 
