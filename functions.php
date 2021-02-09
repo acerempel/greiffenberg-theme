@@ -68,7 +68,7 @@ function greiffenberg_customize($customizer) {
 
   $customizer->add_section('spacing', array(
     'title' => 'Spacing',
-    'description' => 'Ajust the spacing between various visual elements of the page',
+    'description' => 'Ajust the spacing between various visual elements of the page. These settings each control many parts of the page at once; in order to evaluate their effects, it\'s best to try them out and observe the live preview.',
     'priority' => 50
   ));
 
