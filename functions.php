@@ -26,6 +26,7 @@ function greiffenberg_customize($customizer) {
   $customizer->add_control('body-line-height', array(
     'label' => 'Line height of body text',
     'type' => 'number',
+    'input_attrs' => array('min' => '0.5', 'max' => '3.0', 'step' => '0.1'),
     'section' => 'typography'
   ));
 
@@ -45,6 +46,7 @@ function greiffenberg_customize($customizer) {
     'label' => 'Vertical spacing',
     'description' => 'This controls the amount of vertical space between various elements of the page, including paragraphs.',
     'type' => 'number',
+    'input_attrs' => array('min' => '0.5', 'max' => '3.0', 'step' => '0.1'),
     'section' => 'spacing'
   ));
 
