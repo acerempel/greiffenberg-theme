@@ -18,7 +18,7 @@ add_action('wp_enqueue_scripts', 'greiffenberg_styles');
 function greiffenberg_customize($customizer) {
   $customizer->add_setting('body-line-height', array(
     'capability' => 'edit_theme_options', // what is this?
-    'default' => '1.5',
+    'default' => '1.7',
     'transport' => 'postMessage',
     'sanitize_callback' => function ($number) { return (float) $number; }
   ));
@@ -78,7 +78,7 @@ add_action('customize_register', 'greiffenberg_customize');
 
 function greiffenberg_custom_css() {
   echo '<style> body {';
-  echo '--global--line-height-body:' . get_theme_mod('body-line-height', '1.5') . 'rem;'; 
+  echo '--global--line-height-body:' . get_theme_mod('body-line-height', '1.7') . ';'; 
   echo '--global--spacing-vertical:' . get_theme_mod('vertical-spacing', '1') . 'rem;';
   echo '--global--spacing-horizontal:' . get_theme_mod('horizontal-spacing', '0.8') . 'rem;';
   echo '}</style>';
