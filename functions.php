@@ -16,7 +16,8 @@ function greiffenberg_styles() {
 add_action('wp_enqueue_scripts', 'greiffenberg_styles');
 
 $greiffenberg_defaults = array(
-  'body-line-height' => '1.7',
+  'body-line-height' => '1.6',
+  'heading-line-height' => '1.4',
   'vertical-spacing' => '1',
   'horizontal-spacing' => '0.8'
 );
@@ -33,6 +34,20 @@ function greiffenberg_customize($customizer) {
 
   $customizer->add_control('body-line-height', array(
     'label' => 'Line height of body text',
+    'type' => 'number',
+    'input_attrs' => array('min' => '0.5', 'max' => '3.0', 'step' => '0.1'),
+    'section' => 'typography'
+  ));
+
+  $customizer->add_setting('heading-line-height', array(
+    'capability' => 'edit_theme_options', // what is this?
+    'default' => $greiffenberg_defaults['heading-line-height'],
+    'transport' => 'postMessage',
+    'sanitize_callback' => function ($number) { return (float) $number; }
+  ));
+
+  $customizer->add_control('heading-line-height', array(
+    'label' => 'Line height of headings',
     'type' => 'number',
     'input_attrs' => array('min' => '0.5', 'max' => '3.0', 'step' => '0.1'),
     'section' => 'typography'
@@ -92,6 +107,7 @@ function greiffenberg_get_mod($id) {
 function greiffenberg_custom_css() {
   echo '<style> body {';
   echo '--global--line-height-body:' . greiffenberg_get_mod('body-line-height') . ';'; 
+  echo '--global--line-height-heading:' . greiffenberg_get_mod('heading-line-height') . ';'; 
   echo '--global--spacing-vertical:' . greiffenberg_get_mod('vertical-spacing') . 'rem;';
   echo '--global--spacing-horizontal:' . greiffenberg_get_mod('horizontal-spacing') . 'rem;';
   echo '}</style>';
