@@ -1,6 +1,7 @@
 <?php
 
-function greiffenberg_styles() {
+// {{{ EXTERNAL STYLESHEETS & SCRIPTS
+function greiffenberg_enqueue_styles() {
   wp_enqueue_style(
     // Handle that identifies this resource.
     'greiffenberg-main-stylesheet',
@@ -11,18 +12,31 @@ function greiffenberg_styles() {
     // Ensure the stylesheet is reloaded (not cached) when the theme version is changed.
     wp_get_theme()->get('Version')
   );
-  $gfonts_uri = greiffenberg_google_fonts_uri();
+  $gfonts_uri = greiffenberg_get_google_fonts_uri();
   if ($gfonts_uri !== null) {
     wp_enqueue_style(
       'greiffenberg-google-fonts',
       $gfonts_uri,
-      array(),
-      null
+      array(), // No dependencies.
+      null // Don't add a version.
     );
   }
 }
 
-add_action('wp_enqueue_scripts', 'greiffenberg_styles');
+add_action('wp_enqueue_scripts', 'greiffenberg_enqueue_styles');
+
+add_action('after_setup_theme', function () { add_editor_style('./block-editor-style.css'); });
+
+function greiffenberg_enqueue_customize_preview_script() {
+  wp_enqueue_script(
+    'greiffenberg-customize-preview-script',
+    get_stylesheet_directory_uri() . '/customize_preview.js',
+    array('customize-preview'),
+    wp_get_theme()->get('Version')
+  );
+}
+
+add_action('customize_preview_init', 'greiffenberg_enqueue_customize_preview_script');
 
 function greiffenberg_resource_hints($urls, $relation) {
   if ($relation === 'preconnect') {
@@ -32,6 +46,8 @@ function greiffenberg_resource_hints($urls, $relation) {
 }
 
 add_filter('wp_resource_hints', 'greiffenberg_resource_hints', 10 /* the default priority */, 2 /* accepts 2 arguments */);
+
+// }}} EXTERNALS
 
 // {{{ DEFAULTS
 
@@ -79,7 +95,7 @@ function greiffenberg_get_font_choices() {
   return $result;
 }
 
-function greiffenberg_google_fonts_uri() {
+function greiffenberg_get_google_fonts_uri() {
   global $greiffenberg_fonts;
   $body_font = greiffenberg_get_mod('font-family-base');
   $headings_font = greiffenberg_get_mod('font-family-headings');
@@ -267,13 +283,16 @@ function greiffenberg_get_mod($id) {
   return get_theme_mod($id, $greiffenberg_defaults[$id]) . ($greiffenberg_units[$id] ?? '');
 }
 
+// {{{ INLINE STYLES
+// (in <style> tags, not in style attributes)
+
 function greiffenberg_css_variable($variable, $value, $important = false) {
   $mod = greiffenberg_get_mod($value);
   $prop_value = strpos($value, 'font-family-') === 0 ? greiffenberg_font_property_value($mod) : $mod;
   return "--$variable: " . $prop_value . ($important ? ' !important;' : ';');
 }
 
-function greiffenberg_css_variables($important) {
+function greiffenberg_get_css_variables($important) {
   return
       greiffenberg_css_variable('global--line-height-body', 'body-line-height', $important)
     . greiffenberg_css_variable('global--line-height-heading', 'heading-line-height', $important)
@@ -284,27 +303,16 @@ function greiffenberg_css_variables($important) {
     . greiffenberg_css_variable('font-headings', 'font-family-headings', $important);
 }
 
-function greiffenberg_inline_style() {
-  echo '<style>:root {' . greiffenberg_css_variables(false) . '}</style>';
+function greiffenberg_print_inline_style() {
+  echo '<style>:root {' . greiffenberg_get_css_variables(false) . '}</style>';
 }
 
-add_action('wp_head', 'greiffenberg_inline_style');
-
-function greiffenberg_customize_preview_script() {
-  wp_enqueue_script(
-    'greiffenberg-customize-preview-script',
-    get_stylesheet_directory_uri() . '/customize_preview.js',
-    array('customize-preview'),
-    wp_get_theme()->get('Version')
-  );
-}
-
-add_action('customize_preview_init', 'greiffenberg_customize_preview_script');
+add_action('wp_head', 'greiffenberg_print_inline_style');
 
 function greiffenberg_block_editor_inline_style() {
-  wp_add_inline_style('wp-edit-post', '.editor-styles-wrapper {' . greiffenberg_css_variables(true) . '}');
+  wp_add_inline_style('wp-edit-post', '.editor-styles-wrapper {' . greiffenberg_get_css_variables(true) . '}');
 }
 
 add_action('enqueue_block_editor_assets', 'greiffenberg_block_editor_inline_style');
 
-add_action('after_setup_theme', function () { add_editor_style('./block-editor-style.css'); });
+// }}} INLINE STYLES
