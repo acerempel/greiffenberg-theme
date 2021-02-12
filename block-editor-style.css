@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+/* The !important is unfortunate, but we need them because we don't get loaded
+ after the parent editor stylesheet ... wish we had a bit more control over
+ that. */
+
+:root {
+  --global--font-size-xl: 2rem !important;
+  --global--font-size-xxl: 2.5rem !important;
+  --global--font-size-xxxl: 3.25rem !important;
+  /* Override style.css media query 335 */
+  --heading--font-size-h2: var(--global--font-size-xl) !important;
+  --heading--font-size-h3: calc(1.25 * var(--global--font-size-lg)) !important;
+}
+
+/* Fixes a bug in twentytwentyone style.css */
+p, .wp-block-verse {
+	line-height: var(--wp--typography--line-height, var(--global--line-height-body)) !important;
+}
