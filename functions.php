@@ -12,15 +12,7 @@ function greiffenberg_enqueue_styles() {
     // Ensure the stylesheet is reloaded (not cached) when the theme version is changed.
     wp_get_theme()->get('Version')
   );
-  $gfonts_uri = greiffenberg_get_google_fonts_uri();
-  if ($gfonts_uri !== null) {
-    wp_enqueue_style(
-      'greiffenberg-google-fonts',
-      $gfonts_uri,
-      array(), // No dependencies.
-      null // Don't add a version.
-    );
-  }
+  greiffenberg_enqueue_google_fonts();
 }
 
 add_action('wp_enqueue_scripts', 'greiffenberg_enqueue_styles');
@@ -120,6 +112,18 @@ function greiffenberg_get_google_fonts_uri() {
   }
   $uri .= 'display=swap';
   return $uri;
+}
+
+function greiffenberg_enqueue_google_fonts() {
+  $gfonts_uri = greiffenberg_get_google_fonts_uri();
+  if ($gfonts_uri !== null) {
+    wp_enqueue_style(
+      'greiffenberg-google-fonts',
+      $gfonts_uri,
+      array(), // No dependencies.
+      null // Don't add a version.
+    );
+  }
 }
 
 function greiffenberg_font_property_value($font) {
@@ -309,10 +313,11 @@ function greiffenberg_print_inline_style() {
 
 add_action('wp_head', 'greiffenberg_print_inline_style');
 
-function greiffenberg_block_editor_inline_style() {
+function greiffenberg_enqueue_block_editor_assets() {
+  greiffenberg_enqueue_google_fonts();
   wp_add_inline_style('wp-edit-post', '.editor-styles-wrapper {' . greiffenberg_get_css_variables(true) . '}');
 }
 
-add_action('enqueue_block_editor_assets', 'greiffenberg_block_editor_inline_style');
+add_action('enqueue_block_editor_assets', 'greiffenberg_enqueue_block_editor_assets');
 
 // }}} INLINE STYLES
