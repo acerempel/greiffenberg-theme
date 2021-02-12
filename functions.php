@@ -11,16 +11,38 @@ function greiffenberg_styles() {
     // Ensure the stylesheet is reloaded (not cached) when the theme version is changed.
     wp_get_theme()->get('Version')
   );
+  $gfonts_uri = greiffenberg_google_fonts_uri();
+  if ($gfonts_uri !== null) {
+    wp_enqueue_style(
+      'greiffenberg-google-fonts',
+      $gfonts_uri,
+      array(),
+      null
+    );
+  }
 }
 
 add_action('wp_enqueue_scripts', 'greiffenberg_styles');
+
+function greiffenberg_resource_hints($urls, $relation) {
+  if ($relation === 'preconnect') {
+    $urls['greiffenberg-google-fonts-preconnect'] = array('href' => 'https://fonts.gstatic.com', 'crossorigin' => true);
+  }
+  return $urls;
+}
+
+add_filter('wp_resource_hints', 'greiffenberg_resource_hints', 10 /* the default priority */, 2 /* accepts 2 arguments */);
+
+// {{{ DEFAULTS
 
 $greiffenberg_defaults = array(
   'body-line-height' => '1.6',
   'heading-line-height' => '1.4',
   'vertical-spacing' => '1',
   'horizontal-spacing' => '2',
-  'site-title-case' => 'uppercase'
+  'site-title-case' => 'uppercase',
+  'font-family-base' => 'unset', // falls back to system-ui etc.
+  'font-family-headings' => 'unset' // likewise
 );
 
 $greiffenberg_units = array(
@@ -28,9 +50,90 @@ $greiffenberg_units = array(
   'vertical-spacing' => 'rem'
 );
 
+// }}} DEFAULTS
+
+// {{{ FONTS
+
+$greiffenberg_fonts = array(
+  'unset' => array(
+    'label' => "User's system default",
+    'google_font_name' => false,
+    'type' => 'sans-serif'
+  ),
+  'Crimson Pro' => array(
+    'fallbacks' => 'Garamond, Georgia, Baskerville',
+    'type' => 'serif'
+  ),
+  'Lato' => array(
+    'fallbacks' => 'Open Sans, Roboto',
+    'type' => 'sans-serif'
+  )
+);
+
+function greiffenberg_get_font_choices() {
+  global $greiffenberg_fonts;
+  $result = array();
+  foreach ($greiffenberg_fonts as $value => $info) {
+    $result[$value] = $info['label'] ?? $value;
+  }
+  return $result;
+}
+
+function greiffenberg_google_fonts_uri() {
+  global $greiffenberg_fonts;
+  $body_font = greiffenberg_get_mod('font-family-base');
+  $headings_font = greiffenberg_get_mod('font-family-headings');
+  if ($body_font === $headings_font) {
+    $desired_fonts = array(array('family' => $body_font, 'variants' => 'all'));
+  } else {
+    $desired_fonts = array(
+      array('family' => $body_font, 'variants' => ':ital,wght@0,400;0,700;1,400'),
+      array('family' => $headings_font, 'variants' => ':ital,wght@0,300;0,400;0,600')
+    );
+  }
+  $uri = "https://fonts.googleapis.com/css2?";
+  $desired_fonts_filtered = array_filter($desired_fonts, function ($font) use ($greiffenberg_fonts) {
+    $font_info = $greiffenberg_fonts[$font['family']];
+    return !(array_key_exists('google_font_name', $font_info)) || (array_key_exists('google_font_name', $font_info) && $font_info['google_font_name'] !== false);
+  });
+  if (count($desired_fonts_filtered) === 0) return null;
+  foreach ($desired_fonts_filtered as $font) {
+    $uri .= 'family='; $uri .= str_replace(' ', '+', $font['family']);
+    $uri .= $font['variants'];
+    $uri .= '&';
+  }
+  $uri .= 'display=swap';
+  return $uri;
+}
+
+function greiffenberg_font_property_value($font) {
+  global $greiffenberg_fonts;
+  $font_info = $greiffenberg_fonts[$font];
+  if ($font === 'unset') return "$font;";
+  $font_info_fallback = $font_info['fallbacks'];
+  $font_info_type = $font_info['type'];
+  if (null === $font_info_fallback && null === $font_info_type) {
+    $fallback = '';
+  } else if (null !== $font_info_fallback && null === $font_info_type) {
+    $fallback = ", $font_info_fallback";
+  } else if (null === $font_info_fallback && null !== $font_info_type) {
+    $fallback = ", $font_info_type";
+  } else if (null !== $font_info_fallback && null !== $font_info_type){
+    $fallback = ", $font_info_fallback, $font_info_type";
+  }
+  return "'$font'" . $fallback . ';';
+}
+
+// }}} FONTS
+
+// {{{ CUSTOMIZER CUSTOMIZATION
+
 function greiffenberg_customize($customizer) {
   global $greiffenberg_defaults;
 
+  // Section: TYPOGRAPHY {{{
+
+  // Line height {{{
   $customizer->add_setting('body-line-height', array(
     'capability' => 'edit_theme_options', // what is this?
     'default' => $greiffenberg_defaults['body-line-height'],
@@ -58,7 +161,9 @@ function greiffenberg_customize($customizer) {
     'input_attrs' => array('min' => '0.5', 'max' => '3.0', 'step' => '0.1'),
     'section' => 'typography'
   ));
+  // }}} Line height
 
+  // {{{ Case
   $customizer->add_setting('site-title-case', array(
     'capability' => 'edit_theme_options',
     'default' => $greiffenberg_defaults['site-title-case'],
@@ -71,12 +176,47 @@ function greiffenberg_customize($customizer) {
     'type' => 'checkbox',
     'section' => 'typography'
   ));
+  // }}} Case
+
+  // {{{ Font family
+  $customizer->add_setting('font-family-base', array(
+    'capability' => 'edit_theme_options',
+    'default' => $greiffenberg_defaults['font-family-base'],
+    'transport' => 'refresh' // note: change this to postMessage once we figure that out
+  ));
+
+  $customizer->add_setting('font-family-headings', array(
+    'capability' => 'edit_theme_options',
+    'default' => $greiffenberg_defaults['font-family-headings'],
+    'transport' => 'refresh' // note: change this to postMessage once we figure that out
+  ));
+
+  $font_choices = greiffenberg_get_font_choices();
+
+  $customizer->add_control('font-family-base', array(
+    'label' => 'Font family – body text',
+    'type' => 'select',
+    'choices' => $font_choices,
+    'section' => 'typography'
+  ));
+
+  $customizer->add_control('font-family-headings', array(
+    'label' => 'Font family – headings',
+    'type' => 'select',
+    'choices' => $font_choices,
+    'section' => 'typography'
+  ));
+  // }}} Font family
 
   $customizer->add_section('typography', array(
     'title' => 'Typography',
     'description' => 'Ajust how text is displayed – line height, font family, etc.',
     'priority' => 45
   ));
+
+  // }}} Section: TYPOGRAPHY
+
+  // {{{ Section: SPACING
 
   $customizer->add_setting('vertical-spacing', array(
     'capability' => 'edit_theme_options',
@@ -114,9 +254,13 @@ function greiffenberg_customize($customizer) {
     'priority' => 50
   ));
 
+  // }}} Section: SPACING
+
 }
 
 add_action('customize_register', 'greiffenberg_customize');
+
+// }}} CUSTOMIZER
 
 function greiffenberg_get_mod($id) {
   global $greiffenberg_defaults, $greiffenberg_units;
@@ -124,7 +268,9 @@ function greiffenberg_get_mod($id) {
 }
 
 function greiffenberg_css_variable($variable, $value, $important = false) {
-  return "--$variable: " . greiffenberg_get_mod($value) . ($important ? ' !important;' : ';');
+  $mod = greiffenberg_get_mod($value);
+  $prop_value = strpos($value, 'font-family-') === 0 ? greiffenberg_font_property_value($mod) : $mod;
+  return "--$variable: " . $prop_value . ($important ? ' !important;' : ';');
 }
 
 function greiffenberg_css_variables($important) {
@@ -133,11 +279,13 @@ function greiffenberg_css_variables($important) {
     . greiffenberg_css_variable('global--line-height-heading', 'heading-line-height', $important)
     . greiffenberg_css_variable('global--spacing-vertical', 'vertical-spacing', $important)
     . greiffenberg_css_variable('global--spacing-horizontal', 'horizontal-spacing', $important)
-    . greiffenberg_css_variable('branding--title--text-transform', 'site-title-case', $important);
+    . greiffenberg_css_variable('branding--title--text-transform', 'site-title-case', $important)
+    . greiffenberg_css_variable('font-base', 'font-family-base', $important)
+    . greiffenberg_css_variable('font-headings', 'font-family-headings', $important);
 }
 
 function greiffenberg_inline_style() {
-  echo '<style>body {' . greiffenberg_css_variables(false) . '}</style>';
+  echo '<style>:root {' . greiffenberg_css_variables(false) . '}</style>';
 }
 
 add_action('wp_head', 'greiffenberg_inline_style');
