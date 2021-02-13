@@ -75,9 +75,18 @@ $greiffenberg_fonts = array(
     'type' => 'serif'
   ),
   'Lato' => array(
-    'fallbacks' => 'Open Sans, Roboto',
+    'fallbacks' => '"Open Sans", Roboto',
     'type' => 'sans-serif'
-  )
+  ),
+  'Poppins' => array(
+    'fallbacks' => '"Avenir Next", "Avenir", "Open Sans", Roboto',
+    'type' => 'sans-serif',
+  ),
+  'Baskerville' => array(
+    'fallbacks' => 'Baskerville, Georgia',
+    'type' => 'serif',
+    'google_font_name' => 'Libre Baskerville',
+  ),
 );
 
 function greiffenberg_get_font_choices() {
@@ -122,7 +131,7 @@ function greiffenberg_get_google_fonts_uri() {
 
   $uri = "https://fonts.googleapis.com/css2?";
   foreach ($desired_fonts_filtered as $font) {
-    $uri .= 'family='; $uri .= str_replace(' ', '+', $font['family']);
+    $uri .= 'family='; $uri .= str_replace(' ', '+', $greiffenberg_fonts[$font['family']]['google_font_name'] ?? $font['family']);
     $variants = array_unique($font['variants'], SORT_STRING);
     sort($variants, SORT_STRING);
     $uri .= ':ital,wght@'; $uri .= implode(';', $variants);
@@ -149,6 +158,7 @@ function greiffenberg_font_property_value($font) {
   global $greiffenberg_fonts;
   $font_info = $greiffenberg_fonts[$font];
   if ($font === 'unset') return "$font;";
+  $font_name = $font_info['google_font_name'] ?? $font;
   $font_info_fallback = $font_info['fallbacks'];
   $font_info_type = $font_info['type'];
   if (null === $font_info_fallback && null === $font_info_type) {
@@ -160,7 +170,7 @@ function greiffenberg_font_property_value($font) {
   } else if (null !== $font_info_fallback && null !== $font_info_type){
     $fallback = ", $font_info_fallback, $font_info_type";
   }
-  return "'$font'" . $fallback . ';';
+  return "'$font_name'" . $fallback . ';';
 }
 
 // }}} FONTS
