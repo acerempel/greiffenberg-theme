@@ -164,7 +164,7 @@ function greiffenberg_customize($customizer) {
   $customizer->add_control('body-line-height', array(
     'label' => 'Line height – body text',
     'type' => 'number',
-    'input_attrs' => array('min' => '0.5', 'max' => '3.0', 'step' => '0.1'),
+    'input_attrs' => array('min' => '1.0', 'max' => '3.0', 'step' => '0.1'),
     'section' => 'typography'
   ));
 
@@ -178,7 +178,7 @@ function greiffenberg_customize($customizer) {
   $customizer->add_control('heading-line-height', array(
     'label' => 'Line height – headings',
     'type' => 'number',
-    'input_attrs' => array('min' => '0.5', 'max' => '3.0', 'step' => '0.1'),
+    'input_attrs' => array('min' => '1.0', 'max' => '3.0', 'step' => '0.1'),
     'section' => 'typography'
   ));
   // }}} Line height
