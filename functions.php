@@ -248,7 +248,7 @@ function greiffenberg_customize($customizer) {
   $customizer->add_control('vertical-spacing', array(
     'label' => 'Vertical spacing',
     'description' => 'This controls the amount of vertical space between various elements of the page, including paragraphs.',
-    'type' => 'number',
+    'type' => 'range',
     'input_attrs' => array('min' => '0.5', 'max' => '3.0', 'step' => '0.1'),
     'section' => 'spacing'
   ));
@@ -263,7 +263,7 @@ function greiffenberg_customize($customizer) {
   $customizer->add_control('horizontal-spacing', array(
     'label' => 'Horizontal spacing',
     'description' => 'This controls the amount of horizontal space around various parts of the page.',
-    'type' => 'number',
+    'type' => 'range',
     'input_attrs' => array('min' => '0.5', 'max' => '3.0', 'step' => '0.1'),
     'section' => 'spacing'
   ));
