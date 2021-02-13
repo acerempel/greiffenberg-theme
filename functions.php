@@ -98,8 +98,12 @@ function greiffenberg_get_google_fonts_uri() {
   $headings_font_weight = greiffenberg_get_mod('font-weight-headings');
   $page_title_font_weight = greiffenberg_get_mod('font-weight-page-title');
 
-  $base_font_variants = array(variant(0, 400), variant(0, 700), variant(1, 400), variant(0, $headings_font_weight));
-  $headings_font_variants = array(variant(0, $headings_font_weight), variant(0, $page_title_font_weight));
+  $base_font_variants = array(variant(0, 400), variant(0, 700), variant(1, 400));
+  $headings_font_variants = array(
+    variant(0, $headings_font_weight),
+    variant(1, $headings_font_weight),
+    variant(0, $page_title_font_weight),
+  );
 
   if ($base_font === $headings_font) {
     $desired_fonts = array(array('family' => $base_font, 'variants' => array_merge($base_font_variants, $headings_font_variants)));
