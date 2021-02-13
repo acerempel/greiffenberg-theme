@@ -50,7 +50,9 @@ $greiffenberg_defaults = array(
   'horizontal-spacing' => '2',
   'site-title-case' => 'uppercase',
   'font-family-base' => 'unset', // falls back to system-ui etc.
-  'font-family-headings' => 'unset' // likewise
+  'font-family-headings' => 'unset', // likewise
+  'font-weight-headings' => '500',
+  'font-weight-page-title' => '400'
 );
 
 $greiffenberg_units = array(
@@ -228,6 +230,42 @@ function greiffenberg_customize($customizer) {
   ));
   // }}} Font family
 
+  // {{{ Font weight
+  $font_weight_choices = array(
+    '300' => 'Light',
+    '400' => 'Regular',
+    '500' => 'Medium',
+    '600' => 'Semibold',
+    '700' => 'Bold'
+  );
+
+  $customizer->add_setting('font-weight-headings', array(
+    'capability' => 'edit_theme_options',
+    'default' => $greiffenberg_defaults['font-weight-headings'],
+    'transport' => 'postMessage'
+  ));
+
+  $customizer->add_setting('font-weight-page-title', array(
+    'capability' => 'edit_theme_options',
+    'default' => $greiffenberg_defaults['font-weight-page-title'],
+    'transport' => 'postMessage'
+  ));
+
+  $customizer->add_control('font-weight-headings', array(
+    'label' => 'Font weight – headings',
+    'type' => 'select',
+    'choices' => $font_weight_choices,
+    'section' => 'typography'
+  ));
+
+  $customizer->add_control('font-weight-page-title', array(
+    'label' => 'Font weight – page-title',
+    'type' => 'select',
+    'choices' => $font_weight_choices,
+    'section' => 'typography'
+  ));
+  // }}} Font weight
+
   $customizer->add_section('typography', array(
     'title' => 'Typography',
     'description' => 'Ajust how text is displayed – line height, font family, etc.',
@@ -303,6 +341,8 @@ function greiffenberg_get_css_variables($important) {
     . greiffenberg_css_variable('global--spacing-vertical', 'vertical-spacing', $important)
     . greiffenberg_css_variable('global--spacing-horizontal', 'horizontal-spacing', $important)
     . greiffenberg_css_variable('branding--title--text-transform', 'site-title-case', $important)
+    . greiffenberg_css_variable('heading--font-weight', 'font-weight-headings', $important)
+    . greiffenberg_css_variable('heading--font-weight-page-title', 'font-weight-page-title', $important)
     . greiffenberg_css_variable('font-base', 'font-family-base', $important)
     . greiffenberg_css_variable('font-headings', 'font-family-headings', $important);
 }

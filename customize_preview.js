@@ -14,3 +14,9 @@
   wp.customize('site-title-case', value => {
     value.bind(to => { document.body.style.setProperty('--branding--title--text-transform', to ? 'uppercase' : 'none') })
   });
+  wp.customize('font-weight-headings', value => {
+    value.bind(to => { document.body.style.setProperty('--heading--font-weight', to) })
+  });
+  wp.customize('font-weight-page-title', value => {
+    value.bind(to => { document.body.style.setProperty('--heading--font-weight-page-title', to) })
+  });
