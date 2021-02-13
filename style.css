@@ -16,7 +16,7 @@ Description: Theme for CRVG sonnet translations, based on Twenty Twenty One
   --global--font-size-xxxl: 3.25rem;
   /* Override style.css media query 335 */
   --heading--font-size-h2: var(--global--font-size-xl);
-  --heading--font-size-h3: calc(1.25 * var(--global--font-size-lg));
+  --heading--font-size-h3: var(--global--font-size-lg);
 }
 
 /* Fixes a bug in twentytwentyone style.css */

@@ -10,7 +10,7 @@
   --global--font-size-xxxl: 3.25rem !important;
   /* Override style.css media query 335 */
   --heading--font-size-h2: var(--global--font-size-xl) !important;
-  --heading--font-size-h3: calc(1.25 * var(--global--font-size-lg)) !important;
+  --heading--font-size-h3: var(--global--font-size-lg) !important;
 }
 
 /* Fixes a bug in twentytwentyone style.css */
