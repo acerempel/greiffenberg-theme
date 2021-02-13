@@ -91,28 +91,41 @@ function greiffenberg_get_font_choices() {
 
 function greiffenberg_get_google_fonts_uri() {
   global $greiffenberg_fonts;
-  $body_font = greiffenberg_get_mod('font-family-base');
+  function variant($ital, $wght) { return "$ital,$wght"; }
+
+  $base_font = greiffenberg_get_mod('font-family-base');
   $headings_font = greiffenberg_get_mod('font-family-headings');
-  if ($body_font === $headings_font) {
-    $desired_fonts = array(array('family' => $body_font, 'variants' => 'all'));
+  $headings_font_weight = greiffenberg_get_mod('font-weight-headings');
+  $page_title_font_weight = greiffenberg_get_mod('font-weight-page-title');
+
+  $base_font_variants = array(variant(0, 400), variant(0, 700), variant(1, 400), variant(0, $headings_font_weight));
+  $headings_font_variants = array(variant(0, $headings_font_weight), variant(0, $page_title_font_weight));
+
+  if ($base_font === $headings_font) {
+    $desired_fonts = array(array('family' => $base_font, 'variants' => array_merge($base_font_variants, $headings_font_variants)));
   } else {
     $desired_fonts = array(
-      array('family' => $body_font, 'variants' => ':ital,wght@0,400;0,700;1,400'),
-      array('family' => $headings_font, 'variants' => ':ital,wght@0,300;0,400;0,600')
+      array('family' => $base_font, 'variants' => $base_font_variants),
+      array('family' => $headings_font, 'variants' => $headings_font_variants),
     );
   }
-  $uri = "https://fonts.googleapis.com/css2?";
+
   $desired_fonts_filtered = array_filter($desired_fonts, function ($font) use ($greiffenberg_fonts) {
     $font_info = $greiffenberg_fonts[$font['family']];
     return !(array_key_exists('google_font_name', $font_info)) || (array_key_exists('google_font_name', $font_info) && $font_info['google_font_name'] !== false);
   });
   if (count($desired_fonts_filtered) === 0) return null;
+
+  $uri = "https://fonts.googleapis.com/css2?";
   foreach ($desired_fonts_filtered as $font) {
     $uri .= 'family='; $uri .= str_replace(' ', '+', $font['family']);
-    $uri .= $font['variants'];
+    $variants = array_unique($font['variants'], SORT_STRING);
+    sort($variants, SORT_STRING);
+    $uri .= ':ital,wght@'; $uri .= implode(';', $variants);
     $uri .= '&';
   }
   $uri .= 'display=swap';
+
   return $uri;
 }
 
@@ -242,13 +255,13 @@ function greiffenberg_customize($customizer) {
   $customizer->add_setting('font-weight-headings', array(
     'capability' => 'edit_theme_options',
     'default' => $greiffenberg_defaults['font-weight-headings'],
-    'transport' => 'postMessage'
+    'transport' => 'refresh' // TODO make it so this can be postMessage
   ));
 
   $customizer->add_setting('font-weight-page-title', array(
     'capability' => 'edit_theme_options',
     'default' => $greiffenberg_defaults['font-weight-page-title'],
-    'transport' => 'postMessage'
+    'transport' => 'refresh' // TODO make it so this can be postMessage
   ));
 
   $customizer->add_control('font-weight-headings', array(
