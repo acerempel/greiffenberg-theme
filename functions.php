@@ -293,7 +293,7 @@ function greiffenberg_customize($customizer) {
   ));
 
   $customizer->add_control('font-weight-page-title', array(
-    'label' => 'Font weight – page-title',
+    'label' => 'Font weight – page title',
     'type' => 'select',
     'choices' => $font_weight_choices,
     'section' => 'typography'
