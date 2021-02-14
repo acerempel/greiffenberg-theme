@@ -17,3 +17,7 @@
 p, .wp-block-verse {
 	line-height: var(--wp--typography--line-height, var(--global--line-height-body)) !important;
 }
+
+.entry-header {
+  max-width: var(--responsive--aligndefault-width);
+}
