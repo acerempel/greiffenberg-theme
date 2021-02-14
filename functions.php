@@ -108,11 +108,18 @@ function greiffenberg_get_google_fonts_uri() {
   $page_title_font_weight = greiffenberg_get_mod('font-weight-page-title');
 
   $base_font_variants = array(variant(0, 400), variant(0, 700), variant(1, 400));
-  $headings_font_variants = array(
-    variant(0, $headings_font_weight),
-    variant(1, $headings_font_weight),
-    variant(0, $page_title_font_weight),
-  );
+  if (is_customize_preview()) {
+    $headings_font_variants = array(
+      variant(0, '300..700'),
+      variant(1, '300..700'),
+    );
+  } else {
+    $headings_font_variants = array(
+      variant(0, $headings_font_weight),
+      variant(1, $headings_font_weight),
+      variant(0, $page_title_font_weight),
+    );
+  }
 
   if ($base_font === $headings_font) {
     $desired_fonts = array(array('family' => $base_font, 'variants' => array_merge($base_font_variants, $headings_font_variants)));
@@ -269,13 +276,13 @@ function greiffenberg_customize($customizer) {
   $customizer->add_setting('font-weight-headings', array(
     'capability' => 'edit_theme_options',
     'default' => $greiffenberg_defaults['font-weight-headings'],
-    'transport' => 'refresh' // TODO make it so this can be postMessage
+    'transport' => 'postMessage',
   ));
 
   $customizer->add_setting('font-weight-page-title', array(
     'capability' => 'edit_theme_options',
     'default' => $greiffenberg_defaults['font-weight-page-title'],
-    'transport' => 'refresh' // TODO make it so this can be postMessage
+    'transport' => 'postMessage',
   ));
 
   $customizer->add_control('font-weight-headings', array(
