@@ -362,6 +362,18 @@ function greiffenberg_get_mod($id) {
 // {{{ INLINE STYLES
 // (in <style> tags, not in style attributes)
 
+$greiffenberg_css_variables = array(
+  array('global--line-height-body', 'body-line-height'),
+  array('global--line-height-heading', 'heading-line-height'),
+  array('global--spacing-vertical', 'vertical-spacing'),
+  array('global--spacing-horizontal', 'horizontal-spacing'),
+  array('branding--title--text-transform', 'site-title-case'),
+  array('heading--font-weight', 'font-weight-headings'),
+  array('heading--font-weight-page-title', 'font-weight-page-title'),
+  array('font-base', 'font-family-base'),
+  array('font-headings', 'font-family-headings'),
+);
+
 function greiffenberg_css_variable($variable, $value, $important = false) {
   $mod = greiffenberg_get_mod($value);
   $prop_value = strpos($value, 'font-family-') === 0 ? greiffenberg_font_property_value($mod) : $mod;
@@ -369,16 +381,10 @@ function greiffenberg_css_variable($variable, $value, $important = false) {
 }
 
 function greiffenberg_get_css_variables($important) {
-  return
-      greiffenberg_css_variable('global--line-height-body', 'body-line-height', $important)
-    . greiffenberg_css_variable('global--line-height-heading', 'heading-line-height', $important)
-    . greiffenberg_css_variable('global--spacing-vertical', 'vertical-spacing', $important)
-    . greiffenberg_css_variable('global--spacing-horizontal', 'horizontal-spacing', $important)
-    . greiffenberg_css_variable('branding--title--text-transform', 'site-title-case', $important)
-    . greiffenberg_css_variable('heading--font-weight', 'font-weight-headings', $important)
-    . greiffenberg_css_variable('heading--font-weight-page-title', 'font-weight-page-title', $important)
-    . greiffenberg_css_variable('font-base', 'font-family-base', $important)
-    . greiffenberg_css_variable('font-headings', 'font-family-headings', $important);
+  global $greiffenberg_css_variables;
+  return array_reduce($greiffenberg_css_variables, function ($acc, $var) use ($important) {
+    return $acc . greiffenberg_css_variable($var[0], $var[1], $important);
+  }, '');
 }
 
 function greiffenberg_print_inline_style() {
