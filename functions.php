@@ -177,7 +177,7 @@ function greiffenberg_font_property_value($font) {
   } else if (null !== $font_info_fallback && null !== $font_info_type){
     $fallback = ", $font_info_fallback, $font_info_type";
   }
-  return "'$font_name'" . $fallback . ';';
+  return "'$font_name'" . $fallback;
 }
 
 // }}} FONTS
