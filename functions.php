@@ -109,7 +109,8 @@ function greiffenberg_get_google_fonts_uri() {
   $page_title_font_weight = greiffenberg_get_mod('font-weight-page-title');
 
   $base_font_variants = array(variant(0, 400), variant(0, 700), variant(1, 400));
-  if (is_customize_preview()) {
+  $is_customize_preview = is_customize_preview();
+  if ($is_customize_preview) {
     $headings_font_variants = array(
       variant(0, '300..700'),
       variant(1, '300..700'),
@@ -123,7 +124,15 @@ function greiffenberg_get_google_fonts_uri() {
   }
 
   if ($base_font === $headings_font) {
-    $desired_fonts = array(array('family' => $base_font, 'variants' => array_merge($base_font_variants, $headings_font_variants)));
+    // If in customizer preview, headings variants includes all variants, so no
+    // duplicates.
+    $merged_variants = $is_customize_preview
+      ? $headings_font_variants
+      : array_merge($base_font_variants, $headings_font_variants);
+    $desired_fonts = array(array(
+      'family' => $base_font,
+      'variants' => $merged_variants,
+    ));
   } else {
     $desired_fonts = array(
       array('family' => $base_font, 'variants' => $base_font_variants),
