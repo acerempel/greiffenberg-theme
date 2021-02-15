@@ -52,7 +52,8 @@ $greiffenberg_defaults = array(
   'font-family-base' => 'unset', // falls back to system-ui etc.
   'font-family-headings' => 'unset', // likewise
   'font-weight-headings' => '500',
-  'font-weight-page-title' => '400'
+  'font-weight-page-title' => '400',
+  'background--darken-by' => '0',
 );
 
 $greiffenberg_units = array(
@@ -348,6 +349,21 @@ function greiffenberg_customize($customizer) {
 
   // }}} Section: SPACING
 
+  // {{{ Section: BACKGROUND
+  $customizer->add_setting('background--darken-by', array(
+    'capability' => 'edit_theme_options',
+    'default' => $greiffenberg_defaults['background--darken-by'],
+    'transport' => 'postMessage',
+  ));
+
+  $customizer->add_control('background--darken-by', array(
+    'label' => 'Darken background image',
+    'description' => '100% will result in a black background; 0% will leave the background image unchanged.',
+    'type' => 'range',
+    'input_attrs' => array('min' => '0', 'max' => '1', 'step' => '0.01'),
+    'section' => 'background_image',
+  ));
+  // }}} Section: BACKGROUND
 }
 
 add_action('customize_register', 'greiffenberg_customize');
@@ -372,6 +388,7 @@ $greiffenberg_css_variables = array(
   array('heading--font-weight-page-title', 'font-weight-page-title'),
   array('font-base', 'font-family-base'),
   array('font-headings', 'font-family-headings'),
+  array('background--darken-by', 'background--darken-by'),
 );
 
 function greiffenberg_css_variable($variable, $value, $important = false) {

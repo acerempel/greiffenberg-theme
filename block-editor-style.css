@@ -21,3 +21,7 @@ p, .wp-block-verse {
 .entry-header {
   max-width: var(--responsive--aligndefault-width);
 }
+
+.site {
+  background-color: rgba(0, 0, 0, var(--background--darken-by));
+}
