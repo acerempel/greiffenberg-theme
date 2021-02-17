@@ -42,6 +42,10 @@ p, .wp-block-verse, .widget-area ul li {
   background-color: rgba(0, 0, 0, var(--background--darken-by));
 }
 
+.textwidget {
+  font-family: var(--global--font-secondary);
+}
+
 .textwidget p {
   margin-top: var(--global--spacing-unit);
 }
@@ -60,7 +64,7 @@ p, .wp-block-verse, .widget-area ul li {
 
 @media only screen and (max-width: 481px) {
   .widget-area {
-    margin-top: calc(0.666 * var(--global--spacing-vertical));
+    margin-top: var(--global--spacing-unit);
   }
 }
 
@@ -85,9 +89,14 @@ p, .wp-block-verse, .widget-area ul li {
 }
 
 .site-main { 
-  padding-top: calc(0.333 * var(--global--spacing-vertical));
+  padding-top: calc(0.5 * var(--global--spacing-unit));
 }
 
 .site-header {
-  padding-bottom: var(--global--spacing-vertical);
+  padding-bottom: calc(3 * var(--global--spacing-unit));
+}
+
+.singular .entry-header {
+  padding-bottom: calc(2 * var(--global--spacing-unit));
+  margin-bottom: calc(3 * var(--global--spacing-unit));
 }
