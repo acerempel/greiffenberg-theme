@@ -46,7 +46,6 @@ add_filter('wp_resource_hints', 'greiffenberg_resource_hints', 10 /* the default
 $greiffenberg_defaults = array(
   'body-line-height' => '1.6',
   'heading-line-height' => '1.4',
-  'vertical-spacing' => '1',
   'horizontal-spacing' => '2',
   'site-title-case' => 'uppercase',
   'font-family-base' => 'unset', // falls back to system-ui etc.
@@ -59,7 +58,6 @@ $greiffenberg_defaults = array(
 
 $greiffenberg_units = array(
   'horizontal-spacing' => 'rem',
-  'vertical-spacing' => 'rem',
   'spacing-unit' => 'rem',
 );
 
@@ -322,21 +320,6 @@ function greiffenberg_customize($customizer) {
 
   // {{{ Section: SPACING
 
-  $customizer->add_setting('vertical-spacing', array(
-    'capability' => 'edit_theme_options',
-    'default' => $greiffenberg_defaults['vertical-spacing'],
-    'transport' => 'postMessage',
-    'sanitize_callback' => function ($number) { return (float) $number; }
-  ));
-
-  $customizer->add_control('vertical-spacing', array(
-    'label' => 'Vertical spacing',
-    'description' => 'This controls the amount of vertical space between various elements of the page, including paragraphs.',
-    'type' => 'range',
-    'input_attrs' => array('min' => '0.5', 'max' => '3.0', 'step' => '0.1'),
-    'section' => 'spacing'
-  ));
-
   $customizer->add_setting('horizontal-spacing', array(
     'capability' => 'edit_theme_options',
     'default' => $greiffenberg_defaults['horizontal-spacing'],
@@ -360,8 +343,8 @@ function greiffenberg_customize($customizer) {
   ));
 
   $customizer->add_control('spacing-unit', array(
-    'label' => 'General spacing',
-    'description' => 'This controls the amount of space between various items.',
+    'label' => 'Spacing',
+    'description' => 'This controls the amount of space between various items, including between paragraphs.',
     'type' => 'range',
     'input_attrs' => array('min' => '0.5', 'max' => '3.0', 'step' => '0.1'),
     'section' => 'spacing',
@@ -407,7 +390,6 @@ function greiffenberg_get_mod($id) {
 $greiffenberg_css_variables = array(
   array('global--line-height-body', 'body-line-height'),
   array('global--line-height-heading', 'heading-line-height'),
-  array('global--spacing-vertical', 'vertical-spacing'),
   array('global--spacing-horizontal', 'horizontal-spacing'),
   array('branding--title--text-transform', 'site-title-case'),
   array('heading--font-weight', 'font-weight-headings'),
