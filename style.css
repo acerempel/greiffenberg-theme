@@ -100,3 +100,7 @@ p, .wp-block-verse, .widget-area ul li {
   padding-bottom: calc(2 * var(--global--spacing-unit));
   margin-bottom: calc(3 * var(--global--spacing-unit));
 }
+
+.wp-block-gallery .blocks-gallery-image, .wp-block-gallery .blocks-gallery-item {
+  width: calc((100% - var(--global--spacing-vertical)) / 2);
+}
