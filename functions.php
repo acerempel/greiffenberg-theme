@@ -79,17 +79,41 @@ $greiffenberg_fonts = array(
     'type' => 'sans-serif',
     'variable' => false,
   ),
+  'Libre Baskerville' => array(
+    'fallbacks' => 'Baskerville, Georgia',
+    'type' => 'serif',
+    'variable' => false,
+  ),
+  'Lora' => array(
+    'fallbacks' => 'Georgia, "Palatino Linotype", Palatino',
+    'type' => 'serif',
+    'variable' => true,
+  ),
+  'Newsreader' => array(
+    'fallbacks' => 'Georgia, "Palatino Linotype", Palatino',
+    'type' => 'serif',
+    'variable' => true,
+  ),
+  'Nunito' => array(
+    'fallbacks' => '"Open Sans", Ubuntu, "Segoe UI", -apple-system, BlinkMacSystemFont',
+    'type' => 'sans-serif',
+    'variable' => false,
+  ),
   'Poppins' => array(
     'fallbacks' => '"Avenir Next", "Avenir", "Open Sans", Roboto',
     'type' => 'sans-serif',
     'variable' => false,
   ),
-  'Baskerville' => array(
-    'fallbacks' => 'Baskerville, Georgia',
+  'Source Serif Pro' => array(
+    'fallbacks' => '"Palatino Linotype", Palatino, Georgia',
     'type' => 'serif',
-    'google_font_name' => 'Libre Baskerville',
     'variable' => false,
   ),
+  'Vollkorn' => array(
+    'fallbacks' => '"Hoefler Text", "Palatino Linotype", Palatino, Georgia',
+    'type' => 'serif',
+    'variable' => true,
+  )
 );
 
 function greiffenberg_get_font_choices() {
