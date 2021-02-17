@@ -36,3 +36,11 @@ p, .wp-block-verse {
 .site {
   background-color: rgba(0, 0, 0, var(--background--darken-by));
 }
+
+.textwidget p {
+  margin-top: var(--global--spacing-unit);
+}
+
+.widget-title {
+  font-size: var(--global--font-size-md);
+}
