@@ -71,20 +71,24 @@ $greiffenberg_fonts = array(
   ),
   'Crimson Pro' => array(
     'fallbacks' => 'Garamond, Georgia, Baskerville',
-    'type' => 'serif'
+    'type' => 'serif',
+    'variable' => true,
   ),
   'Lato' => array(
     'fallbacks' => '"Open Sans", Roboto',
-    'type' => 'sans-serif'
+    'type' => 'sans-serif',
+    'variable' => false,
   ),
   'Poppins' => array(
     'fallbacks' => '"Avenir Next", "Avenir", "Open Sans", Roboto',
     'type' => 'sans-serif',
+    'variable' => false,
   ),
   'Baskerville' => array(
     'fallbacks' => 'Baskerville, Georgia',
     'type' => 'serif',
     'google_font_name' => 'Libre Baskerville',
+    'variable' => false,
   ),
 );
 
@@ -109,10 +113,16 @@ function greiffenberg_get_google_fonts_uri() {
   $base_font_variants = array(variant(0, 400), variant(0, 700), variant(1, 400));
   $is_customize_preview = is_customize_preview();
   if ($is_customize_preview) {
-    $headings_font_variants = array(
-      variant(0, '300..700'),
-      variant(1, '300..700'),
-    );
+    $headings_font_variants =
+      $greiffenberg_fonts[$headings_font]['variable']
+      ? array(
+          variant(0, '300..700'),
+          variant(1, '300..700'),
+        )
+      : array(
+          variant(0, 300), variant(0, 400), variant(0, 500),
+          variant(0, 600), variant(0, 700),
+        );
   } else {
     $headings_font_variants = array(
       variant(0, $headings_font_weight),
