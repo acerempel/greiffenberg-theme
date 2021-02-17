@@ -6,7 +6,7 @@ Theme URI: https://github.com/acerempel/greiffenberg
 Author: Alan Rempel
 Author URI: http://threedots.ca
 Template: twentytwentyone
-Version: 0.1.17
+Version: 0.1.19
 Description: Theme for CRVG sonnet translations, based on Twenty Twenty One
 */
 
@@ -17,10 +17,12 @@ Description: Theme for CRVG sonnet translations, based on Twenty Twenty One
   /* Override style.css media query 335 */
   --heading--font-size-h2: var(--global--font-size-xl);
   --heading--font-size-h3: var(--global--font-size-lg);
+  --button--padding-vertical: calc(0.75 * var(--global--spacing-unit));
+  --form--font-size: var(--global--font-size-md);
 }
 
 /* Fixes a bug in twentytwentyone style.css */
-p, .wp-block-verse {
+p, .wp-block-verse, .widget-area ul li {
 	line-height: var(--wp--typography--line-height, var(--global--line-height-body));
 }
 
@@ -43,4 +45,36 @@ p, .wp-block-verse {
 
 .widget-title {
   font-size: var(--global--font-size-md);
+}
+
+.widget-area li {
+  margin-top: calc(0.5 * var(--global--spacing-unit));
+}
+
+.widget-area {
+  margin-top: calc(3 * var(--global--spacing-vertical));
+}
+
+@media only screen and (max-width: 481px) {
+  .widget-area {
+    margin-top: var(--global--spacing-vertical);
+  }
+}
+
+.search-form .search-field, .search-form .search-submit {
+  margin-top: var(--global--spacing-unit);
+}
+
+.entry-content > * {
+  margin-top: var(--global--spacing-unit);
+  margin-bottom: var(--global--spacing-unit);
+}
+
+.site-main > article > *, .site-footer > *, .widget-area > * {
+  margin-top: max(calc(0.666 * var(--global--spacing-vertical)), var(--global--spacing-unit));
+  margin-bottom: max(calc(0.666 * var(--global--spacing-vertical)), var(--global--spacing-unit));
+}
+
+.site-header {
+  padding-bottom: var(--global--spacing-vertical);
 }
