@@ -11,6 +11,22 @@
   /* Override style.css media query 335 */
   --heading--font-size-h2: var(--global--font-size-xl) !important;
   --heading--font-size-h3: var(--global--font-size-lg) !important;
+  --heading--font-weight-page-title: max(400, calc(var(--heading--font-weight) - 100)) !important;
+  --button--padding-vertical: calc(0.75 * var(--global--spacing-unit)) !important;
+  --form--font-size: var(--global--font-size-md) !important;
+  --global--spacing-vertical: calc(1.5 * var(--global--spacing-unit)) !important;
+  --global--spacing-horizontal: var(--global--spacing-unit) !important;
+}
+
+.wp-block.editor-post-title__block {
+  max-width: var(--responsive--aligndefault-width) !important;
+  padding-bottom: calc(2 * var(--global--spacing-unit)) !important;
+  margin-bottom: calc(3 * var(--global--spacing-unit)) !important;
+}
+
+[data-block] {
+  margin-top: var(--global--spacing-unit) !important;
+  margin-bottom: var(--global--spacing-unit) !important;
 }
 
 /* Fixes a bug in twentytwentyone style.css */
@@ -18,10 +34,10 @@ p, .wp-block-verse {
 	line-height: var(--wp--typography--line-height, var(--global--line-height-body)) !important;
 }
 
-.wp-block.editor-post-title__block {
-  max-width: var(--responsive--aligndefault-width) !important;
-}
-
 .site {
   background-color: rgba(0, 0, 0, var(--background--darken-by));
+}
+
+.wp-block-gallery .blocks-gallery-image, .wp-block-gallery .blocks-gallery-item {
+  width: calc((100% - var(--global--spacing-vertical)) / 2);
 }
