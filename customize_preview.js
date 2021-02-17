@@ -11,9 +11,6 @@
   wp.customize('font-weight-headings', value => {
     value.bind(to => { document.body.style.setProperty('--heading--font-weight', to) })
   });
-  wp.customize('font-weight-page-title', value => {
-    value.bind(to => { document.body.style.setProperty('--heading--font-weight-page-title', to) })
-  });
   wp.customize('background--darken-by', value => {
     value.bind(to => { document.body.style.setProperty('--background--darken-by', to) })
   });

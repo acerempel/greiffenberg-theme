@@ -50,7 +50,6 @@ $greiffenberg_defaults = array(
   'font-family-base' => 'unset', // falls back to system-ui etc.
   'font-family-headings' => 'unset', // likewise
   'font-weight-headings' => '500',
-  'font-weight-page-title' => '400',
   'background--darken-by' => '0',
   'spacing-unit' => '1',
 );
@@ -132,7 +131,7 @@ function greiffenberg_get_google_fonts_uri() {
   $base_font = greiffenberg_get_mod('font-family-base');
   $headings_font = greiffenberg_get_mod('font-family-headings');
   $headings_font_weight = greiffenberg_get_mod('font-weight-headings');
-  $page_title_font_weight = greiffenberg_get_mod('font-weight-page-title');
+  $page_title_font_weight = max(400, $headings_font_weight - 100);
 
   $base_font_variants = array(variant(0, 400), variant(0, 700), variant(1, 400));
   $is_customize_preview = is_customize_preview();
@@ -321,21 +320,8 @@ function greiffenberg_customize($customizer) {
     'transport' => 'postMessage',
   ));
 
-  $customizer->add_setting('font-weight-page-title', array(
-    'capability' => 'edit_theme_options',
-    'default' => $greiffenberg_defaults['font-weight-page-title'],
-    'transport' => 'postMessage',
-  ));
-
   $customizer->add_control('font-weight-headings', array(
     'label' => 'Font weight – headings',
-    'type' => 'select',
-    'choices' => $font_weight_choices,
-    'section' => 'typography'
-  ));
-
-  $customizer->add_control('font-weight-page-title', array(
-    'label' => 'Font weight – page title',
     'type' => 'select',
     'choices' => $font_weight_choices,
     'section' => 'typography'
@@ -409,7 +395,6 @@ $greiffenberg_css_variables = array(
   array('global--line-height-heading', 'heading-line-height'),
   array('branding--title--text-transform', 'site-title-case'),
   array('heading--font-weight', 'font-weight-headings'),
-  array('heading--font-weight-page-title', 'font-weight-page-title'),
   array('font-base', 'font-family-base'),
   array('font-headings', 'font-family-headings'),
   array('background--darken-by', 'background--darken-by'),
