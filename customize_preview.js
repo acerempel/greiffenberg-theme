@@ -23,3 +23,6 @@
   wp.customize('background--darken-by', value => {
     value.bind(to => { document.body.style.setProperty('--background--darken-by', to) })
   });
+  wp.customize('spacing-unit', value => {
+    value.bind(to => { document.body.style.setProperty('--global--spacing-unit', to + 'rem') })
+  });

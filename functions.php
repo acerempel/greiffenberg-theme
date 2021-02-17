@@ -54,11 +54,13 @@ $greiffenberg_defaults = array(
   'font-weight-headings' => '500',
   'font-weight-page-title' => '400',
   'background--darken-by' => '0',
+  'spacing-unit' => '1',
 );
 
 $greiffenberg_units = array(
   'horizontal-spacing' => 'rem',
-  'vertical-spacing' => 'rem'
+  'vertical-spacing' => 'rem',
+  'spacing-unit' => 'rem',
 );
 
 // }}} DEFAULTS
@@ -350,6 +352,21 @@ function greiffenberg_customize($customizer) {
     'section' => 'spacing'
   ));
 
+  $customizer->add_setting('spacing-unit', array(
+    'capability' => 'edit_theme_options',
+    'default' => $greiffenberg_defaults['spacing-unit'],
+    'transport' => 'postMessage',
+    'sanitize_callback' => function ($number) { return (float) $number; },
+  ));
+
+  $customizer->add_control('spacing-unit', array(
+    'label' => 'General spacing',
+    'description' => 'This controls the amount of space between various items.',
+    'type' => 'range',
+    'input_attrs' => array('min' => '0.5', 'max' => '3.0', 'step' => '0.1'),
+    'section' => 'spacing',
+  ));
+
   $customizer->add_section('spacing', array(
     'title' => 'Spacing',
     'description' => 'Ajust the spacing between various visual elements of the page. These settings each control many parts of the page at once; in order to evaluate their effects, it\'s best to try them out and observe the live preview.',
@@ -398,6 +415,7 @@ $greiffenberg_css_variables = array(
   array('font-base', 'font-family-base'),
   array('font-headings', 'font-family-headings'),
   array('background--darken-by', 'background--darken-by'),
+  array('global--spacing-unit', 'spacing-unit'),
 );
 
 function greiffenberg_css_variable($variable, $value, $important = false) {
