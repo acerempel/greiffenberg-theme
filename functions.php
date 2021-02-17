@@ -46,7 +46,6 @@ add_filter('wp_resource_hints', 'greiffenberg_resource_hints', 10 /* the default
 $greiffenberg_defaults = array(
   'body-line-height' => '1.6',
   'heading-line-height' => '1.4',
-  'horizontal-spacing' => '2',
   'site-title-case' => 'uppercase',
   'font-family-base' => 'unset', // falls back to system-ui etc.
   'font-family-headings' => 'unset', // likewise
@@ -57,7 +56,6 @@ $greiffenberg_defaults = array(
 );
 
 $greiffenberg_units = array(
-  'horizontal-spacing' => 'rem',
   'spacing-unit' => 'rem',
 );
 
@@ -320,21 +318,6 @@ function greiffenberg_customize($customizer) {
 
   // {{{ Section: SPACING
 
-  $customizer->add_setting('horizontal-spacing', array(
-    'capability' => 'edit_theme_options',
-    'default' => $greiffenberg_defaults['horizontal-spacing'],
-    'transport' => 'postMessage',
-    'sanitize_callback' => function ($number) { return (float) $number; }
-  ));
-
-  $customizer->add_control('horizontal-spacing', array(
-    'label' => 'Horizontal spacing',
-    'description' => 'This controls the amount of horizontal space around various parts of the page.',
-    'type' => 'range',
-    'input_attrs' => array('min' => '0.5', 'max' => '3.0', 'step' => '0.1'),
-    'section' => 'spacing'
-  ));
-
   $customizer->add_setting('spacing-unit', array(
     'capability' => 'edit_theme_options',
     'default' => $greiffenberg_defaults['spacing-unit'],
@@ -390,7 +373,6 @@ function greiffenberg_get_mod($id) {
 $greiffenberg_css_variables = array(
   array('global--line-height-body', 'body-line-height'),
   array('global--line-height-heading', 'heading-line-height'),
-  array('global--spacing-horizontal', 'horizontal-spacing'),
   array('branding--title--text-transform', 'site-title-case'),
   array('heading--font-weight', 'font-weight-headings'),
   array('heading--font-weight-page-title', 'font-weight-page-title'),

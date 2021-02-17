@@ -20,6 +20,7 @@ Description: Theme for CRVG sonnet translations, based on Twenty Twenty One
   --button--padding-vertical: calc(0.75 * var(--global--spacing-unit));
   --form--font-size: var(--global--font-size-md);
   --global--spacing-vertical: calc(1.5 * var(--global--spacing-unit));
+  --global--spacing-horizontal: var(--global--spacing-unit);
 }
 
 /* Fixes a bug in twentytwentyone style.css */
@@ -59,6 +60,12 @@ p, .wp-block-verse, .widget-area ul li {
 @media only screen and (max-width: 481px) {
   .widget-area {
     margin-top: calc(0.666 * var(--global--spacing-vertical));
+  }
+}
+
+@media only screen and (min-width: 652px) {
+  .widget-area {
+    column-gap: calc(3 * var(--global--spacing-unit));
   }
 }
 
