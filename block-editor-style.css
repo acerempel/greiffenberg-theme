@@ -12,6 +12,7 @@
   --heading--font-size-h2: var(--global--font-size-xl) !important;
   --heading--font-size-h3: var(--global--font-size-lg) !important;
   --heading--font-weight-page-title: max(400, calc(var(--heading--font-weight) - 100)) !important;
+  --heading--line-height-h1: var(--global--line-height-heading) !important;
   --button--padding-vertical: calc(0.75 * var(--global--spacing-unit)) !important;
   --form--font-size: var(--global--font-size-md) !important;
   --global--spacing-vertical: calc(1.5 * var(--global--spacing-unit)) !important;
