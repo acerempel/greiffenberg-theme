@@ -140,3 +140,8 @@ p, .wp-block-verse, .widget-area ul li {
 .wp-block-gallery .blocks-gallery-image, .wp-block-gallery .blocks-gallery-item {
   width: calc((100% - var(--global--spacing-vertical)) / 2);
 }
+
+body:not(.single) .entry-content {
+  --heading--font-size-h2: var(--global--font-size-lg);
+  --heading--font-size-h3: var(--global--font-size-md);
+}
