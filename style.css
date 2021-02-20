@@ -85,9 +85,10 @@ p, .wp-block-verse, .widget-area ul li {
 
   .home .content-area {
     display: grid;
-    grid-template-columns: var(--responsive--aligndefault-width) 1fr;
-    grid-column-gap: calc(4 * var(--global--spacing-unit));
-    margin: 0 calc(2 * var(--global--spacing-vertical));
+    grid-template-columns: minmax(var(--responsive--aligndefault-width), 2fr) 1fr;
+    margin: 0 auto;
+    width: 96%;
+    max-width: var(--responsive--alignwide-width);
   }
 
   .home .site-footer {
