@@ -23,6 +23,8 @@ Description: Theme for CRVG sonnet translations, based on Twenty Twenty One
   --form--font-size: var(--global--font-size-md);
   --global--spacing-vertical: calc(1.5 * var(--global--spacing-unit));
   --global--spacing-horizontal: var(--global--spacing-unit);
+  --branding--title--font-size: var(--global--font-size-xl);
+  --branding--description--font-size: var(--global--font-size-md);
 }
 
 /* Fixes a bug in twentytwentyone style.css */
@@ -49,6 +51,12 @@ p, .wp-block-verse, .widget-area ul li {
 
 .widget-title {
   font-size: var(--global--font-size-md);
+}
+
+@media (min-width: 482px) {
+  .widget-title {
+    font-size: var(--global--font-size-lg);
+  }
 }
 
 .widget-area li {
@@ -130,8 +138,8 @@ p, .wp-block-verse, .widget-area ul li {
 }
 
 .singular .entry-header {
-  padding-bottom: calc(2 * var(--global--spacing-unit));
-  margin-bottom: calc(3 * var(--global--spacing-unit));
+  padding-bottom: calc(1 * var(--global--spacing-vertical));
+  margin-bottom: calc(1.5 * var(--global--spacing-vertical));
 }
 
 .site {
@@ -163,4 +171,13 @@ body:not(.single) .entry-content {
   .site {
     --global--spacing-vertical: calc(0.666 * var(--global--spacing-unit));
   }
+}
+
+.entry-content h2 {
+  margin-top: calc(2 * var(--global--spacing-unit));
+}
+
+.site-title {
+  line-height: 1.2;
+  margin-bottom: calc(var(--global--spacing-vertical) / 3);
 }
