@@ -143,6 +143,11 @@ p, .wp-block-verse, .widget-area ul li {
   margin-bottom: var(--global--spacing-unit);
 }
 
+.entry-content > hr.wp-block-separator {
+  margin-top: calc(1.5 * var(--global--spacing-unit));
+  margin-bottom: calc(1.5 * var(--global--spacing-unit));
+}
+
 .site-main > article > *, .site-footer > *, .widget-area > * {
   margin-top: max(var(--global--spacing-unit), var(--global--spacing-vertical));
   margin-bottom: max(var(--global--spacing-unit), var(--global--spacing-vertical));
