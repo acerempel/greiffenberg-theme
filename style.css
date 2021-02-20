@@ -65,7 +65,7 @@ p, .wp-block-verse, .widget-area ul li {
 
 @media only screen and (max-width: 481px) {
   .widget-area {
-    margin-top: var(--global--spacing-unit);
+    margin-top: 0;
   }
 }
 
@@ -117,16 +117,16 @@ p, .wp-block-verse, .widget-area ul li {
 }
 
 .site-main > article > *, .site-footer > *, .widget-area > * {
-  margin-top: var(--global--spacing-vertical);
-  margin-bottom: var(--global--spacing-vertical);
+  margin-top: max(var(--global--spacing-unit), var(--global--spacing-vertical));
+  margin-bottom: max(var(--global--spacing-unit), var(--global--spacing-vertical));
 }
 
 .site-main { 
-  padding-top: calc(0.5 * var(--global--spacing-unit));
+  padding-top: calc(0.333 * var(--global--spacing-vertical));
 }
 
 .site-header {
-  padding-bottom: calc(3 * var(--global--spacing-unit));
+  padding-bottom: calc(2 * var(--global--spacing-vertical));
 }
 
 .singular .entry-header {
@@ -150,5 +150,17 @@ body:not(.single) .entry-content {
 @media only screen and (max-width: 481px) {
   .site-header:not(.has-logo).has-title-and-tagline .site-branding {
     max-width: 96%;
+  }
+}
+
+@media only screen and (max-width: 782px) {
+  .site {
+    --global--spacing-vertical: var(--global--spacing-unit);
+  }
+}
+
+@media only screen and (max-width: 481px) {
+  .site {
+    --global--spacing-vertical: calc(0.666 * var(--global--spacing-unit));
   }
 }
