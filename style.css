@@ -92,11 +92,26 @@ p, .wp-block-verse, .widget-area ul li {
   }
 
   .home .content-area {
-    display: grid;
-    grid-template-columns: minmax(var(--responsive--aligndefault-width), 2fr) 1fr;
-    margin: 0 auto;
-    width: 96%;
-    max-width: var(--responsive--alignwide-width);
+    display: flex;
+    margin: 0 calc(2 * var(--global--spacing-vertical));
+    justify-content: center;
+  }
+
+  .home .content-area > .site-main {
+    flex-basis: var(--responsive--aligndefault-width);
+    flex-shrink: 1;
+    flex-grow: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .home .content-area > .widget-area {
+    flex-basis: calc(0.5 * var(--responsive--aligndefault-width));
+    flex-shrink: 2;
+    flex-grow: 0.333;
+    max-width: 25rem;
+    margin-left: calc(4 * var(--global--spacing-unit));
+    margin-right: 0;
   }
 
   .home .site-footer {
