@@ -181,3 +181,14 @@ body:not(.single) .entry-content {
   line-height: 1.2;
   margin-bottom: calc(var(--global--spacing-vertical) / 3);
 }
+
+.site-footer > .site-info .site-name {
+  line-height: 1.2; /* TODO make this a variable */
+  font-size: var(--branding--title--font-size-mobile);
+}
+
+@media only screen and (min-width: 482px) {
+  .site-footer > .site-info .site-name {
+    font-size: max(calc(0.75 * var(--branding--title--font-size)), var(--branding--title--font-size-mobile));
+  }
+}
