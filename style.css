@@ -146,3 +146,9 @@ body:not(.single) .entry-content {
   --heading--font-size-h2: var(--global--font-size-lg);
   --heading--font-size-h3: var(--global--font-size-md);
 }
+
+@media only screen and (max-width: 481px) {
+  .site-header:not(.has-logo).has-title-and-tagline .site-branding {
+    max-width: 96%;
+  }
+}
