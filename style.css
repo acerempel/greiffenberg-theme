@@ -193,7 +193,6 @@ body:not(.single) .entry-content {
 
 @media only screen and (max-width: 481px) {
   .site {
-    --global--spacing-vertical: calc(0.666 * var(--global--spacing-unit));
     --global--font-size-page-title: var(--global--font-size-xl);
   }
 }
