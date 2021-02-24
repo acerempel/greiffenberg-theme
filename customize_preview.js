@@ -17,3 +17,6 @@
   wp.customize('spacing-unit', value => {
     value.bind(to => { document.body.style.setProperty('--global--spacing-unit', to + 'rem') })
   });
+  wp.customize('sidebar-width', value => {
+    value.bind(to => { document.body.style.setProperty('--sidebar-width', to) })
+  });

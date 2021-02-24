@@ -58,6 +58,7 @@ $greiffenberg_defaults = array(
   'font-weight-headings' => '500',
   'background--darken-by' => '0',
   'spacing-unit' => '1',
+  'sidebar-width' => '0.375',
 );
 
 $greiffenberg_units = array(
@@ -358,6 +359,21 @@ function greiffenberg_customize($customizer) {
     'input_attrs' => array('min' => '0.5', 'max' => '3.0', 'step' => '0.1'),
     'section' => 'spacing',
   ));
+  
+  $customizer->add_setting('sidebar-width', array(
+    'capability' => 'edit_theme_options',
+    'default' => $greiffenberg_defaults['sidebar-width'],
+    'transport' => 'postMessage',
+    'sanitize_callback' => function ($input) { return $input; },
+  ));
+  
+  $customizer->add_control('sidebar-width', array(
+    'label' => 'Sidebar width',
+    'description' => 'Adjust the width of the sidebar, on screens large enough for it to appear.',
+    'type' => 'range',
+    'input_attrs' => array('min' => '0.25', 'max' => '0.75', 'step' => '0.125'),
+    'section' => 'spacing',
+  ));
 
   $customizer->add_section('spacing', array(
     'title' => 'Spacing',
@@ -405,6 +421,7 @@ $greiffenberg_css_variables = array(
   array('font-headings', 'font-family-headings'),
   array('background--darken-by', 'background--darken-by'),
   array('global--spacing-unit', 'spacing-unit'),
+  array('sidebar-width', 'sidebar-width'),
 );
 
 function greiffenberg_css_variable($variable, $value, $important = false) {
