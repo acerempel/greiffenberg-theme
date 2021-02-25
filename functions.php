@@ -420,7 +420,7 @@ $greiffenberg_css_variables = array(
   array('font-base', 'font-family-base'),
   array('font-headings', 'font-family-headings'),
   array('background--darken-by', 'background--darken-by'),
-  array('global--spacing-unit', 'spacing-unit'),
+  array('spacing-unit', 'spacing-unit'),
   array('sidebar-width', 'sidebar-width'),
 );
 

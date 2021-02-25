@@ -6,7 +6,7 @@ Theme URI: https://github.com/acerempel/greiffenberg
 Author: Alan Rempel
 Author URI: http://threedots.ca
 Template: twentytwentyone
-Version: 0.2.4
+Version: 0.2.6
 Description: Theme for CRVG sonnet translations, based on Twenty Twenty One
 */
 
@@ -23,12 +23,16 @@ Description: Theme for CRVG sonnet translations, based on Twenty Twenty One
   --heading--font-size-h3: var(--global--font-size-lg);
   --heading--font-weight-page-title: max(400, calc(var(--heading--font-weight) - 100));
   --heading--line-height-h1: var(--global--line-height-heading);
-  --button--padding-vertical: calc(0.75 * var(--global--spacing-unit));
   --form--font-size: var(--global--font-size-md);
-  --global--spacing-vertical: calc(1.5 * var(--global--spacing-unit));
+  --global--spacing-unit: var(--spacing-unit);
   --global--spacing-horizontal: var(--global--spacing-unit);
   --branding--title--font-size: var(--global--font-size-xl);
   --branding--description--font-size: var(--global--font-size-md);
+}
+
+* {
+  --button--padding-vertical: calc(0.75 * var(--global--spacing-unit));
+  --global--spacing-vertical: calc(1.5 * var(--global--spacing-unit));
 }
 
 /* Fixes a bug in twentytwentyone style.css */
@@ -186,15 +190,15 @@ body:not(.single) .entry-content {
 }
 
 @media only screen and (max-width: 782px) {
-  .site {
-    --global--spacing-unit: calc(0.875 * var(--global--spacing-unit));
+  body {
+    --global--spacing-unit: calc(0.875 * var(--spacing-unit));
   }
 }
 
 @media only screen and (max-width: 481px) {
-  .site {
+  body {
     --global--font-size-page-title: var(--global--font-size-xl);
-    --global--spacing-unit: calc(0.75 * var(--global--spacing-unit));
+    --global--spacing-unit: calc(0.75 * var(--spacing-unit));
   }
 }
 

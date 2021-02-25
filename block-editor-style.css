@@ -18,6 +18,7 @@
   --global--spacing-vertical: calc(1.5 * var(--global--spacing-unit)) !important;
   --global--spacing-horizontal: var(--global--spacing-unit) !important;
   --global--spacing-horizontal: var(--global--spacing-unit) !important;
+  --global--spacing-unit: var(--spacing-unit) !important;
 }
 
 .wp-block.editor-post-title__block {
