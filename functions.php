@@ -13,12 +13,17 @@ function greiffenberg_enqueue_styles() {
     wp_get_theme()->get('Version')
   );
   greiffenberg_enqueue_google_fonts();
+}
+
+add_action('wp_enqueue_scripts', 'greiffenberg_enqueue_styles');
+
+function greiffenberg_dequeue_responsive_embeds() {
   // No responsive embeds! Embeds are disabled anyway, and we don't need the
   // extra script.
   wp_dequeue_script('twenty-twenty-one-responsive-embeds-script');
 }
 
-add_action('wp_enqueue_scripts', 'greiffenberg_enqueue_styles');
+add_action('wp_enqueue_scripts', 'greiffenberg_dequeue_responsive_embeds', /* priority */ 11);
 
 add_action('after_setup_theme', function () {
   remove_theme_support('responsive-embeds');
