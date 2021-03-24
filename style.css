@@ -49,11 +49,11 @@ p, .wp-block-verse, .widget-area ul li {
   max-width: var(--responsive--aligndefault-width);
 }
 
-.textwidget {
+.widget {
   font-family: var(--global--font-secondary);
 }
 
-.textwidget p {
+.widget p {
   margin-top: var(--global--spacing-unit);
 }
 
