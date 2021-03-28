@@ -6,7 +6,7 @@ Theme URI: https://github.com/acerempel/greiffenberg
 Author: Alan Rempel
 Author URI: http://threedots.ca
 Template: twentytwentyone
-Version: 0.2.11
+Version: 0.2.12
 Description: Theme for CRVG sonnet translations, based on Twenty Twenty One
 */
 
@@ -180,9 +180,17 @@ body:not(.single) .entry-content {
   --heading--font-size-h3: var(--global--font-size-md);
 }
 
-@media only screen and (max-width: 481px) {
+.site-header:not(.has-logo).has-title-and-tagline .site-branding {
+  max-width: 96%;
+}
+
+@media only screen and (min-width: 482px) {
   .site-header:not(.has-logo).has-title-and-tagline .site-branding {
-    max-width: 96%;
+    max-width: none;
+  }
+
+  .has-main-navigation .site-branding {
+    margin-right: var(--global--spacing-horizontal);
   }
 }
 
