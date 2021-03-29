@@ -60,3 +60,36 @@ p, .wp-block-verse {
 h2[data-block] {
   margin-top: calc(2 * var(--global--spacing-unit)) !important;
 }
+
+/* WPForms stuff (should really be in a plugin...) {{{ */
+
+.wpforms-field-sublabel {
+  font-size: var(---global--font-size-footer);
+  font-weight: 400;
+}
+.wpforms-field-row {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--global--spacing-horizontal);
+  row-gap: var(--global--spacing-unit);
+}
+.wpforms-field-row-block.wpforms-first {
+  margin-left: 0;
+}
+.wpforms-field-row-block {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.wpforms-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: calc(0.666 * var(--global--spacing-vertical));
+}
+.wpforms-description {
+  margin-bottom: calc(0.666 *var(--global--spacing-vertical));
+}
+.wpforms-one-half {
+  flex: 1 0 auto;
+}
+
+/* }}} WPForms stuff */
