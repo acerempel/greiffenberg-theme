@@ -6,7 +6,7 @@ Theme URI: https://github.com/acerempel/greiffenberg
 Author: Alan Rempel
 Author URI: http://threedots.ca
 Template: twentytwentyone
-Version: 0.2.12
+Version: 0.2.25
 Description: Theme for CRVG sonnet translations, based on Twenty Twenty One
 */
 
@@ -34,6 +34,27 @@ Description: Theme for CRVG sonnet translations, based on Twenty Twenty One
   --button--padding-vertical: calc(0.5 * var(--global--spacing-unit));
   --button--padding-horizontal: calc(2 * var(--button--padding-vertical));
   --global--spacing-vertical: calc(1.5 * var(--global--spacing-unit));
+	--global--color-primary-hover: var(--global--color-primary);
+	--global--color-border: var(--global--color-primary); /* Used for borders (separators) */
+	--form--color-ranged: var(--global--color-secondary);
+	--form--border-color: var(--global--color-secondary);
+	--button--color-text-hover: var(--global--color-secondary);
+	--button--color-text-active: var(--global--color-secondary);
+	--button--color-background: var(--global--color-secondary);
+	--entry-header--color: var(--global--color-primary);
+	--entry-header--color-focus: var(--global--color-secondary);
+	--branding--color-text: var(--global--color-primary);
+	--branding--color-link: var(--global--color-primary);
+	--branding--color-link-hover: var(--global--color-secondary);
+	--primary-nav--color-link: var(--global--color-primary);
+	--primary-nav--color-link-hover: var(--global--color-primary-hover);
+	--primary-nav--color-text: var(--global--color-primary);
+	--primary-nav--border-color: var(--global--color-primary);
+	--pagination--color-text: var(--global--color-primary);
+	--footer--color-text: var(--global--color-primary);
+	--footer--color-link: var(--global--color-primary);
+	--pullquote--border-color: var(--global--color-primary);
+	--pullquote--color-foreground: var(--global--color-primary);
 }
 
 /* Fixes a bug in twentytwentyone style.css */
@@ -121,6 +142,8 @@ p, .wp-block-verse, .widget-area ul li {
     max-width: calc(0.666 * var(--responsive--aligndefault-width));
     margin-left: calc(4 * var(--global--spacing-unit));
     margin-right: 0;
+    margin-top: 0;
+    padding-top: 0;
   }
 
   .home .site-footer {
@@ -159,7 +182,14 @@ p, .wp-block-verse, .widget-area ul li {
 }
 
 .site-header {
-  padding-bottom: calc(3 * var(--global--spacing-unit));
+  padding-bottom: calc(2 * var(--global--spacing-unit));
+  align-items: center;
+}
+
+@media only screen and (min-width: 822px) {
+  .site-header {
+    padding-top: calc(1.5 * var(--global--spacing-unit));
+  }
 }
 
 .singular .entry-header {
@@ -225,6 +255,13 @@ body:not(.single) .entry-content {
   .site-footer > .site-info .site-name {
     font-size: max(calc(0.75 * var(--branding--title--font-size)), var(--branding--title--font-size-mobile));
   }
+}
+
+.header-background {
+  background-color: var(--header-background-colour);
+  margin-bottom: calc(1.5 * var(--global--spacing-unit));
+  --global--color-primary: var(--header--color-primary);
+  --global--color-secondary: var(--header--color-secondary);
 }
 
 /* WPForms stuff (should really be in a plugin...) {{{ */

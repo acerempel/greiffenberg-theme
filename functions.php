@@ -12,6 +12,7 @@ function greiffenberg_enqueue_styles() {
     // Ensure the stylesheet is reloaded (not cached) when the theme version is changed.
     wp_get_theme()->get('Version')
   );
+
   greiffenberg_enqueue_google_fonts();
 }
 
@@ -64,6 +65,7 @@ $greiffenberg_defaults = array(
   'background--darken-by' => '0',
   'spacing-unit' => '1',
   'sidebar-width' => '0.375',
+  'header-background-colour' => 'transparent',
 );
 
 $greiffenberg_units = array(
@@ -389,6 +391,9 @@ function greiffenberg_customize($customizer) {
   // }}} Section: SPACING
 
   // {{{ Section: BACKGROUND
+  include_once get_theme_file_path( 'classes/class-twenty-twenty-one-customize-color-control.php' );
+  include_once get_theme_file_path( 'classes/class-twenty-twenty-one-custom-colors.php' );
+
   $customizer->add_setting('background--darken-by', array(
     'capability' => 'edit_theme_options',
     'default' => $greiffenberg_defaults['background--darken-by'],
@@ -402,6 +407,36 @@ function greiffenberg_customize($customizer) {
     'input_attrs' => array('min' => '0', 'max' => '1', 'step' => '0.01'),
     'section' => 'background_image',
   ));
+
+  $customizer->add_setting('header-background-colour', array(
+    'capability' => 'edit_theme_options',
+    'default' => '#f1f1f1',
+    'transport' => 'postMessage',
+  ));
+  
+  // Get the palette from theme-supports.
+  $palette = get_theme_support( 'editor-color-palette' );
+
+  // Build the colors array from theme-support.
+  $colors = array();
+  if ( isset( $palette[0] ) && is_array( $palette[0] ) ) {
+    foreach ( $palette[0] as $palette_color ) {
+      $colors[] = $palette_color['color'];
+    }
+  }
+
+  $customizer->add_control(
+    new Twenty_Twenty_One_Customize_Color_Control(
+      $customizer,
+      'header-background-colour',
+      array(
+         'label' => 'Header background colour',
+         'description' => 'This should match the darkness or lightness of the header background image, if there is one.',
+         'section' => 'colors',
+         'palette' => $colors,
+      ),
+    )
+  );
   // }}} Section: BACKGROUND
 }
 
@@ -427,26 +462,41 @@ $greiffenberg_css_variables = array(
   array('background--darken-by', 'background--darken-by'),
   array('spacing-unit', 'spacing-unit'),
   array('sidebar-width', 'sidebar-width'),
+  array('header-background-colour', 'header-background-colour'),
 );
 
 function greiffenberg_css_variable($variable, $value, $important = false) {
   $mod = greiffenberg_get_mod($value);
   $prop_value = strpos($value, 'font-family-') === 0 ? greiffenberg_font_property_value($mod) : $mod;
-  return "--$variable: " . $prop_value . ($important ? ' !important;' : ';');
+  return greiffenberg_the_css_variable($variable, $prop_value, $important);
+}
+
+function greiffenberg_the_css_variable($variable, $value, $important) {
+  return "--$variable: " . $value . ($important ? ' !important;' : ';');
 }
 
 function greiffenberg_get_css_variables($important) {
   global $greiffenberg_css_variables;
-  return array_reduce($greiffenberg_css_variables, function ($acc, $var) use ($important) {
+  $variables = array_reduce($greiffenberg_css_variables, function ($acc, $var) use ($important) {
     return $acc . greiffenberg_css_variable($var[0], $var[1], $important);
   }, '');
+  $header_background_colour = greiffenberg_get_mod('header-background-colour');
+  $header_text_colour = ( 127 < Twenty_Twenty_One_Custom_Colors::get_relative_luminance_from_hex( $header_background_colour ) ) ? '#111' : '#eee';
+  $variables .= greiffenberg_the_css_variable('header--color-primary', $header_text_colour, $important);
+  $variables .= greiffenberg_the_css_variable('header--color-secondary', $header_text_colour, $important);
+  return $variables;
 }
 
-function greiffenberg_print_inline_style() {
-  echo '<style>:root {' . greiffenberg_get_css_variables(false) . '}</style>';
+function greiffenberg_head() {
+  echo '<script>';
+  echo file_get_contents(get_stylesheet_directory() . '/scripts/adjust-background-style.js');
+  echo '</script>';
+  echo '<style>';
+  echo ':root {' . greiffenberg_get_css_variables(false) . '}';
+  echo '</style>';
 }
 
-add_action('wp_head', 'greiffenberg_print_inline_style');
+add_action('wp_head', 'greiffenberg_head', 100);
 
 function greiffenberg_enqueue_block_editor_assets() {
   greiffenberg_enqueue_google_fonts();
