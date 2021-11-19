@@ -6,7 +6,7 @@ Theme URI: https://github.com/acerempel/greiffenberg
 Author: Alan Rempel
 Author URI: http://threedots.ca
 Template: twentytwentyone
-Version: 0.2.26
+Version: 0.2.29
 Description: Theme for CRVG sonnet translations, based on Twenty Twenty One
 */
 
@@ -197,10 +197,6 @@ p, .wp-block-verse, .widget-area ul li {
   margin-bottom: calc(2 * var(--global--spacing-unit));
 }
 
-.site {
-  background-color: rgba(0, 0, 0, var(--background--darken-by));
-}
-
 .wp-block-gallery .blocks-gallery-image, .wp-block-gallery .blocks-gallery-item {
   width: calc((100% - 1.5 * var(--global--spacing-unit)) / 2);
 }
@@ -258,10 +254,23 @@ body:not(.single) .entry-content {
 }
 
 .header-background {
-  background-color: var(--header-background-colour);
   margin-bottom: calc(1.5 * var(--global--spacing-unit));
   --global--color-primary: var(--header--color-primary);
   --global--color-secondary: var(--header--color-secondary);
+  position: relative;
+}
+
+/* Place the header background in a separate element, behind the header with the
+ * same size, so that we can apply the `filter` property to only the background.
+ * */
+.header-background::before {
+  background-color: var(--header-background-colour);
+  content: "";
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  z-index: -100;
+  /* 1 - x to turn darkness into brightness */
+  filter: brightness(calc(1 - var(--background--darken-by)));
 }
 
 /* WPForms stuff (should really be in a plugin...) {{{ */
