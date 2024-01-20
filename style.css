@@ -6,7 +6,7 @@ Theme URI: https://github.com/acerempel/greiffenberg
 Author: Alan Rempel
 Author URI: http://threedots.ca
 Template: twentytwentyone
-Version: 0.2.30
+Version: 0.2.32
 Description: Theme for CRVG sonnet translations, based on Twenty Twenty One
 */
 
@@ -263,7 +263,7 @@ body:not(.single) .entry-content {
 /* Place the header background in a separate element, behind the header with the
  * same size, so that we can apply the `filter` property to only the background.
  * */
-.header-background::before {
+.header-background.custom-background::before {
   background-color: var(--header-background-colour);
   content: "";
   position: absolute;
@@ -271,6 +271,12 @@ body:not(.single) .entry-content {
   z-index: -100;
   /* 1 - x to turn darkness into brightness */
   filter: brightness(calc(1 - var(--background--darken-by)));
+}
+
+/* Ensure mobile nav menu has correct background colour */
+.primary-navigation > .primary-menu-container,
+.primary-navigation-open .menu-button-container {
+  background-color: var(--header-background-colour);
 }
 
 /* WPForms stuff (should really be in a plugin...) {{{ */
