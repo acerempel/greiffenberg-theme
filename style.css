@@ -273,10 +273,22 @@ body:not(.single) .entry-content {
   filter: brightness(calc(1 - var(--background--darken-by)));
 }
 
+.primary-navigation {
+  position: initial;
+  align-self: baseline;
+  margin-left: auto;
+}
+
 /* Ensure mobile nav menu has correct background colour */
 .primary-navigation > .primary-menu-container,
 .primary-navigation-open .menu-button-container {
   background-color: var(--header-background-colour);
+}
+
+/* Align menu button vertically with site title */
+.menu-button-container {
+  position: relative;
+  padding: 0;
 }
 
 /* WPForms stuff (should really be in a plugin...) {{{ */
