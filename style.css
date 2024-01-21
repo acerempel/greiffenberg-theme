@@ -177,7 +177,7 @@ p, .wp-block-verse, .widget-area ul li {
   margin-bottom: calc(1.5 * var(--global--spacing-unit));
 }
 
-.site-main { 
+.site-main {
   padding-top: calc(0.5 * var(--global--spacing-unit));
 }
 
@@ -289,6 +289,32 @@ body:not(.single) .entry-content {
 .menu-button-container {
   position: relative;
   padding: 0;
+}
+
+/* Adjust spacing around sub-menu toggle */
+.primary-navigation > div > .menu-wrapper .sub-menu-toggle {
+  width: calc(2 * var(--primary-nav--padding));
+  padding-left: var(--primary-nav--padding);
+}
+
+/* No border on the small-screen menu overlay */
+.primary-navigation .sub-menu {
+  border: none;
+}
+
+@media only screen and (min-width: 482px) {
+  .primary-navigation > div > .menu-wrapper > li > .sub-menu {
+    /* Add a box shadow to sub-menus */
+    box-shadow: 0px 7px 14px 3px rgba(0, 0, 0, 0.333);
+    /* Restore the border for the flyout */
+    border: 1px solid var(--primary-nav--border-color);
+  }
+
+  /* Adjust the little triangles so they align with the +/- button */
+  .primary-navigation > div > .menu-wrapper > li > .sub-menu::before,
+  .primary-navigation > div > .menu-wrapper > li > .sub-menu::after {
+    left: calc(0.75 * var(--primary-nav--padding));
+  }
 }
 
 /* WPForms stuff (should really be in a plugin...) {{{ */
