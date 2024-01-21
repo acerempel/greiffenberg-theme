@@ -291,6 +291,11 @@ body:not(.single) .entry-content {
   padding: 0;
 }
 
+/* Sub-menus use header background colour */
+.primary-navigation > div > .menu-wrapper > li > .sub-menu li {
+  background-color: var(--header-background-colour);
+}
+
 /* Adjust spacing around sub-menu toggle */
 .primary-navigation > div > .menu-wrapper .sub-menu-toggle {
   width: calc(2 * var(--primary-nav--padding));
