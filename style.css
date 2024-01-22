@@ -319,7 +319,7 @@ body:not(.single) .entry-content {
   /* Adjust the little triangle so they align with the +/- button */
   .primary-navigation > div > .menu-wrapper > li > .sub-menu::before {
     left: calc(0.75 * var(--primary-nav--padding));
-    top: 10px;
+    top: -10px;
   }
 
   /* We only need one triangle! */
