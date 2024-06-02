@@ -29,6 +29,7 @@ add_action('wp_enqueue_scripts', 'greiffenberg_dequeue_responsive_embeds', /* pr
 add_action('after_setup_theme', function () {
   remove_theme_support('responsive-embeds');
   add_editor_style('./block-editor-style.css');
+  remove_filter('walker_nav_menu_start_el', 'twenty_twenty_one_add_sub_menu_toggle', 10);
 });
 
 function greiffenberg_enqueue_customize_preview_script() {
@@ -506,3 +507,22 @@ function greiffenberg_enqueue_block_editor_assets() {
 add_action('enqueue_block_editor_assets', 'greiffenberg_enqueue_block_editor_assets');
 
 // }}} INLINE STYLES
+
+// {{{ NAV MENU
+function greiffenberg_add_sub_menu_toggle( $output_orig, $item, $depth, $args ) {
+	if ( 0 === $depth && in_array( 'menu-item-has-children', $item->classes, true ) ) {
+
+		// Add toggle button.
+		$output  = '<button class="sub-menu-toggle" aria-expanded="false" onClick="twentytwentyoneExpandSubMenu(this)">';
+		$output .= '<span class="icon-plus">' . twenty_twenty_one_get_icon_svg( 'ui', 'plus', 18 ) . '</span>';
+		$output .= '<span class="icon-minus">' . twenty_twenty_one_get_icon_svg( 'ui', 'minus', 18 ) . '</span>';
+		$output .= '<span class="screen-reader-text">' . esc_html__( 'Open menu', 'twentytwentyone' ) . '</span>';
+		$output .= '</button>';
+        $output .= $output_orig;
+	}
+	return $output;
+}
+add_filter( 'walker_nav_menu_start_el', 'greiffenberg_add_sub_menu_toggle', 10, 4 );
+
+// }}} NAV MENU
+// vim:foldmethod=marker:foldenable
